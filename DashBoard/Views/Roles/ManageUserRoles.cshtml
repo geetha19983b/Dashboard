@@ -2,7 +2,42 @@
     ViewBag.Title = "ManageUserRoles";
 }
 @Html.Raw(TempData["msg"])
+<script type="text/javascript">
+    function checkWithValue(val) {
+        alert(val);
+        $(":checkbox").filter(function () {
+            return this.value == val;
+        }).prop("checked", "true");
+    }
 
+    $(function () {
+        $("#maprole > #UserName").change(function () {
+
+            var selctedUser = $(this).find("option:selected").text();
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@(Url.Action("GetTowersForUser", "Roles"))",
+                data: { "userName": selctedUser },
+                success: function (data) {
+
+                    var len = data.length;
+                    for (var i = 0; i < len; i++) {
+                        alert(data[i]);
+                        checkWithValue(data[i]);
+                    }
+
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to return core and type field attributes.');
+
+                }
+            });
+
+        });
+    });
+</script>
 <div class="page-header">Manage User Roles</div>
 @Html.ActionLink("Create New Role", "Create") | @Html.ActionLink("Manage User Role", "ManageUserRoles")
 
@@ -142,13 +177,9 @@
                 @Html.ValidationSummary(true)
                 <div class="form-group">
                     @Html.Label("UserName :", new { @class = "control-label col-md-2 col-xs-2" })
-                    <div class="col-md-4 col-xs-4">
+                    <div class="col-md-4 col-xs-4" id="maprole">
                         @Html.DropDownList("UserName", (IEnumerable<SelectListItem>)ViewBag.Users, "Select ...", new { @class = "form-control" })
                         @*Html.TextBox("UserName", null, new { @class = "form-control" })*@
-                    </div>
-                    @Html.Label("Role Name :", new { @class = "control-label col-md-2 col-xs-2" })
-                    <div class="col-md-4 col-xs-4">
-                        @Html.DropDownList("RoleName", (IEnumerable<SelectListItem>)ViewBag.Roles, "Select ...", new { @class = "form-control" })
                     </div>
 
 
@@ -192,7 +223,7 @@
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10 col-xs-offset-2 col-xs-10">
                         <button type="submit" value="Map User" class="btn btn-sm btn-success">
-                            <span class="glyphicon glyphicon-trash"></span>
+                            <span class="glyphicon glyphicon-edit"></span>
                             Map User
                         </button>
                     </div>

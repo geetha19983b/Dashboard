@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "ManageUserRoles";
+}
+@Html.Raw(TempData["msg"])
+
+<div class="page-header">Reset Password</div>
+
+
+<div id="update-message" class="alert-info">
+</div>
+
+
+<div class="panel panel-default small">
+    <div class="panel-heading">Reset Password for User</div>
+    <div class="panel-body">
+        <div class="form-horizontal form-group-sm">
+
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                <div class="form-group">
+                    @Html.Label("UserName :", new { @class = "control-label col-md-2 col-xs-2" })
+                    <div class="col-md-4 col-xs-4">
+                        @Html.DropDownList("UserName", (IEnumerable<SelectListItem>)ViewBag.Users, "Select ...", new { @class = "form-control" })
+
+                    </div>
+                    @Html.Label("New Password :", new { @class = "control-label col-md-2 col-xs-2" })
+                    <div class="col-md-4 col-xs-4">
+                        @Html.TextBox("Password", null, new { @class = "form-control" })
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10 col-xs-offset-2 col-xs-10">
+                        <button type="submit" value="Reset Password" class="btn btn-sm btn-default">
+                            <span class="glyphicon glyphicon-refresh"></span>
+                            Reset Password
+                        </button>
+                    </div>
+                </div>
+
+
+            }
+
+
+
+        </div>
+
+    </div>
+</div>

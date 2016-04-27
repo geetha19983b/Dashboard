@@ -1,0 +1,157 @@
+﻿@*@model PagedList.IPagedList<DashBoard.Models.RCAVM>
+@using PagedList.Mvc;*@
+
+@model IEnumerable<DashBoard.Models.RCAVM>
+
+@using Newtonsoft.Json;
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "InferAppAvail";
+}
+<script src="~/js/libs/dirPagination.js"></script>
+
+<script type="text/javascript">
+    var FilterSLAMod = angular.module('FilterSLAMod', ['angularUtils.directives.dirPagination'])
+
+
+    FilterSLAMod.controller('FilterSLAModController', function ($scope) {
+
+        $scope.sla = "1";
+        $scope.init = function (model) {
+
+            $scope.data = model;
+
+            console.log($scope.data);
+        }
+        $scope.slaFilter = function (item) {
+
+            if (item.SLAMet == $scope.sla) {
+                    return item;
+            }
+        }
+
+    });
+</script>
+
+<script type="text/javascript">
+    angular.element(document).ready(function () {
+        angular.bootstrap($("#modalapp"), ['FilterSLAMod']); // appElement is the html element on which you define ng-app, myApp is the name of the app
+    });
+
+</script>
+
+<div class="modal-dialog" style="width:70%" ng-app="FilterSLAMod" id="modalapp">
+    <div class="modal-content" ng-controller="FilterSLAModController" data-ng-init="init(@JsonConvert.SerializeObject(Model))">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModal-label">RCA Details</h4>
+        </div>
+        <div class="modal-body">
+
+
+
+            <div class="row">
+                <input type="radio" ng-model="sla" value="1" name="group"> SLA Met
+                <input type="radio" ng-model="sla" value="0" name="group"> SLA Missed
+                <div class="table-responsive">
+                    <table id="chartsmodaltbl" class="table table-condensed">
+
+                        <thead>
+                            <tr class="info">
+                                <th class="col-sm-1">
+                                    @*@Html.DisplayNameFor(model => model.IncidentNo)*@
+                                    ParentIncident
+
+                                </th>
+                                <th class="col-sm-1">
+                                    @*@Html.DisplayNameFor(model => model.ShortDesc)*@
+                                    Parent IncidentPriority
+                                </th>
+                                <th class="col-sm-1">
+                                    @*@Html.DisplayNameFor(model => model.Priority)*@
+                                    Number
+                                </th>
+                                <th class="col-sm-1">
+                                    @*@Html.DisplayNameFor(model => model.State)*@
+                                    RCA_State
+                                </th>
+                                <th class="col-sm-1">
+                                    @*@Html.DisplayNameFor(model => model.State)*@
+                                    ProblemTicket
+                                </th>
+                                <th class="col-sm-1">
+                                    @*@Html.DisplayNameFor(model => model.State)*@
+                                    ProblemTicketOpenDate
+                                </th>
+
+
+                            </tr>
+                        </thead>
+                        @*@foreach (var item in Model)
+                        {*@
+                            <tbody>
+                                @*<tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ParentIncident)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Parent_IncidentPriority)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Number)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.RCA_State)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ProblemTicket)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ProblemTicketOpenDate)
+                                    </td>
+                                </tr>*@
+
+                                <tr dir-paginate="model in data | filter: slaFilter |itemsPerPage:5">
+                                    <td>{{model.ParentIncident}}</td>
+                                    <td>{{model.Parent_IncidentPriority}}</td>
+                                    <td>{{model.Number}}</td>
+                                    <td>{{model.RCA_State}}</td>
+                                    <td>{{model.ProblemTicket}}</td>
+                                    <td>{{model.ProblemTicketOpenDate}}</td>
+                                </tr>
+                            </tbody>
+                        @*}*@
+                    </table>
+                </div>
+
+                <dir-pagination-controls max-size="5"
+                                         direction-links="true"
+                                         boundary-links="true">
+                </dir-pagination-controls>
+
+
+                <br />
+                @*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                 <div id="myPager">
+                     @Html.PagedListPager(Model, page => Url.Action("SummaryInfer", new
+                {
+                    page,
+                    catgry = ViewBag.Catgry,
+                    month = ViewBag.Month
+
+                }))
+
+
+                 </div>*@
+
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            @*<button class="btn btn-primary" id="btnOK" onclick="">OK</button>*@
+            <button class="btn btn-primary" data-dismiss="modal" id="btnCancel">Close</button>
+        </div>
+    </div>
+</div>
+

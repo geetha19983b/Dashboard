@@ -1,0 +1,96 @@
+﻿@{
+    ViewBag.Title = "Wizard";
+}
+
+
+<link href="~/Content/css/common.css" rel="stylesheet" />
+<div ng-app="CommentsApp" class="row">
+
+    <div ng-controller="CommentsController" ng-init="init('All')">
+
+
+        <div class="panel panel-primary small">
+            <div class="panel-heading panel-info"><span class="glyphicon glyphicon-pencil"></span> Comment Admin Dashboard </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="list-group">
+                            <a href="#" ng-repeat="commnts in model" class="list-group-item" ng-class="{'active' : currentShow === $index}" ng-click="changecommnt($index)">
+                                <span class="badge">{{commnts.CLSList.length}}</span>
+                                {{commnts.Category}}
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-9">
+                        <div class="row">
+                            <div class="col-md-5 col-md-push-1">
+                                <div class="form-group form-inline form-group-sm">
+
+                                    <input type="search" class="form-control" placeholder="Search" ng-model="commntSearch">
+                                    @*<span class="input-group-btn">*@
+                                    <button class="btn btn-sm btn-primary" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                                    @*</span>*@
+                                </div>
+                            </div>
+                            <div class="col-md-7">
+                                <ul class="nav nav-pills small commnt-filter">
+                                    <li ng-class="{'active' : show == 'All' }" ng-click="show='All'"><a href="#">All</a></li>
+                                    <li ng-class="{'active' : show == 'NotApproved' }" ng-click="show='NotApproved'"><a href="#">NotApproved</a></li>
+                                    <li ng-class="{'active' : show == 'Approved' }" ng-click="show='Approved'"><a href="#">Approved</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group form-inline form-group-sm">
+                                    <input class="form-control input-sm" id="newcommntField" type="text" ng-model="newcommnt"  placeholder="Add New Comment" ng-enter>
+                                    @*<button id="commntSubmit" class="btn btn-sm btn-success" ng-click="addcommnt('true')">Add</button>*@
+                                    <button ng-click="addcommnt('true')" class="btn btn-sm btn-success">Add</button>
+               
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <ul class="list-group" ng-model="commntlist" ng-repeat="commntlist in model track by $index" ng-show="$index === currentShow">
+                                    <li class="list-group-item list-group-item-success" ng-repeat="commnt in commntlist.CLSList | filter:showFn | filter :commntSearch ">
+                                        <label class="btn btn-sm btn-success">
+                                            <input ng-model="commnt.Approved" type="checkbox" autocomplete="off" ng-click="editcomment(commnt)"> Approve
+                                        </label>
+                                        <label class="commntCheckboxlabel"></label>
+                                        <edit-in-place value="commnt" updatefn="editcomment"></edit-in-place>
+                                        <a class="btn btn-danger btn-xs pull-right" ng-click="deletecommnt(commnt)">
+                                            <i class="glyphicon glyphicon-remove"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                @*<div class="row">
+                        <div class="debug">
+                            <p class="text-info">{{ model | json}}</p>
+                        </div>
+                    </div>*@
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+@section scripts{
+    <script src="~/js/libs/jquery.ui.touch-punch.min.js"></script>
+    <script src="~/js/libs/sortable.js"></script>
+    <script src="~/js/app.js"></script>
+    <script src="~/js/CommentsService.js"></script>
+    <script src="~/js/directives/angular.editInPlace.js"></script>
+    @*<script src="~/js/directives/editinplace.js"></script>*@
+    <script src="~/js/directives/angular.ngEnter.js"></script>
+
+}

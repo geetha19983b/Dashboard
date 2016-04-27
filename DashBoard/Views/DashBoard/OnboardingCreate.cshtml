@@ -1,0 +1,118 @@
+﻿@model DashBoard.Models.Onboarding
+
+@{
+    ViewBag.Title = "OnboardingCreate";
+}
+
+<h4><i class="fa-check"></i>Resource Onboarding</h4>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal form-group-sm well well-sm">
+        
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ResourceId, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ResourceId)
+                @Html.ValidationMessageFor(model => model.ResourceId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EmployeeName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.EmployeeName)
+                @Html.ValidationMessageFor(model => model.EmployeeName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LanId, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LanId)
+                @Html.ValidationMessageFor(model => model.LanId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ResourceLocationType, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.ResourceLocationType)*@
+                @Html.RadioButtonFor(model => model.ResourceLocationType, "Onsite")@Html.Label("Onsite")
+                @Html.RadioButtonFor(model => model.ResourceLocationType, "Offshore")@Html.Label("Offshore")
+                @Html.ValidationMessageFor(model => model.ResourceLocationType)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CurrentEmployee, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.CurrentEmployee)*@
+                @Html.RadioButtonFor(model => model.CurrentEmployee, "True")@Html.Label("Active")
+                @Html.RadioButtonFor(model => model.CurrentEmployee, "False")@Html.Label("Inactive")
+                @Html.ValidationMessageFor(model => model.CurrentEmployee)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.OnboardingDate, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.JQueryUI().DatepickerFor(model => model.OnboardingDate, new { @class = "form-control" })
+                @*@Html.EditorFor(model => model.OnboardingDate)*@
+                @Html.ValidationMessageFor(model => model.OnboardingDate)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Comments, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Comments)
+                @Html.ValidationMessageFor(model => model.Comments)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.OffboardingDate, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+                @Html.EditorFor(model => model.OffboardingDate)
+                @Html.ValidationMessageFor(model => model.OffboardingDate)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Tower, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Tower)
+                @Html.ValidationMessageFor(model => model.Tower)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" value="Create" class="btn btn-sm btn-success">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    Create
+                </button>
+                <button type="reset" value="Cancel" class="btn btn-sm btn-success">
+                    <span class="glyphicon glyphicon-remove"></span>
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@*<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>*@
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,45 @@
+﻿@model IEnumerable<DashBoard.Models.tblActionItem>
+
+
+<div class="panel panel-primary small">
+    <!-- Default panel contents -->
+    <div class="panel-heading"><i class="fa fa-bar-chart-o fa-fw"></i>Key Performance Indicators </div>
+    <table class="table table-condensed table-responsive table-striped table-bordered table-hover">
+        <tr class="info">
+            <th class="col-sm-6">
+                @Html.DisplayNameFor(model => model.Action_Item)
+
+            </th>
+            <th class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Owner)
+            </th>
+            <th class="col-sm-2">
+                @Html.DisplayNameFor(model => model.ETA)
+            </th>
+            <th class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Action_Item)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Owner)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ETA)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+
+            </tr>
+        }
+    </table>
+</div>

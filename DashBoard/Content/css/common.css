@@ -1,0 +1,62 @@
+#playground{
+	margin-top: 75px;
+}
+
+.debug{
+	width: 600px;
+	margin: 0 auto;
+	margin-top: 30px;
+}
+
+.commnt-filter {
+	margin-bottom: 25px;
+}
+
+.commnt-filter>li>a{
+	padding: 8px 12px;
+	font-size: 12px;
+}
+
+#commntAdd {
+	margin-left: 40px;
+}
+
+.commntField{
+	padding-left: 5px;
+	font-size: 12px;
+}
+
+#newcommntField{
+	margin: 20px;
+	width: 75%;
+}
+
+#commntSubmit{
+	margin-top: -5px;
+}
+
+.commntTask{
+	margin-bottom: 20px;
+}
+
+.commntName{
+	font-size: 15px;
+	border-bottom: 1px lightgray dotted;
+	padding-bottom:5px;
+}
+
+.edit-in-place span {
+  cursor: pointer;
+}
+
+.edit-in-place input {
+  display: none;
+}
+
+.edit-in-place.active span {
+  display: none;
+}
+
+.edit-in-place.active input {
+  display: inline-block;
+}

@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Create";
+}
+
+<div class="page-header">Create Role</div>
+@Html.ActionLink("List Roles", "Index") | @Html.ActionLink("Manage User Role", "ManageUserRoles")
+<div class="panel panel-primary small">
+    <div class="panel-heading">Create new Roles in DB</div>
+    <div class="panel-body">
+        <div class="form-horizontal form-group-sm">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                <div class="form-group">
+                    @Html.Label("Role name :", new { @class = "control-label col-md-2 col-xs-2" })
+                    <div class="col-md-4 col-xs-4">
+                        @Html.TextBox("RoleName", null, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-4  col-xs-4">
+                        <button type="submit" value="Create" class="btn btn-sm btn-success">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            Create
+                        </button>
+                    </div>
+                </div>
+
+
+            }
+        </div>
+    </div>
+</div>
+

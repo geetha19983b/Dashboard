@@ -1,0 +1,145 @@
+﻿@model DashBoard.Models.IncidentSumVM
+@*<h3>Incident Summary</h3>*@
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-primary small">
+            <!-- Default panel contents -->
+            <div class="panel-heading"><i class="fa fa-bar-chart-o fa-fw"></i>Incident Summary</div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-condensed table-responsive table-striped table-bordered table-hover">
+                        <tr class="info">
+                            <th class="col-sm-1">
+                                Tower
+                            </th>
+                            <th class="col-sm-1">
+                                Incidents
+                            </th>
+                            <th class="col-sm-1">
+                                Mar Inflow
+                            </th>
+                            <th class="col-sm-1">
+                                Resolved % To Total
+                            </th>
+                            <th class="col-sm-1">
+                                Total Resolution SLA
+                            </th>
+                            <th class="col-sm-1">
+                                0-3 Days
+                            </th>
+                            <th class="col-sm-1">
+                                >3 Days
+                            </th>
+                            <th class="col-sm-1">
+                                >7 Days
+                            </th>
+                            <th class="col-sm-1">
+                                >10 Days
+                            </th>
+                            <th class="col-sm-1">
+                                Total
+                            </th>
+
+
+                        </tr>
+                        @foreach (var item in Model.IncidentSummary)
+                {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Tower)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TotalIncidents)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TotalMarInflow)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TotalResolvedandpercenttoTotal)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TotalResolutionSLA)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AgingDays3)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AgingDaysgreaterthan3)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AgingDaysgreaterthan7)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AgingDaysgreaterthan10)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AgingTotal)
+                            </td>
+                        </tr>
+                }
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-condensed table-responsive table-striped table-bordered table-hover">
+                        <tr class="info">
+                            <th class="col-sm-1">
+                                Tower
+                            </th>
+                            <th class="col-sm-1">
+                                Pending Change
+                            </th>
+                            <th class="col-sm-1">
+                                Pending User
+                            </th>
+                            <th class="col-sm-1">
+                                Pending Validation
+                            </th>
+                            <th class="col-sm-1">
+                                Pending Vendor
+                            </th>
+                            <th class="col-sm-1">
+                                WorkInProgress
+                            </th>
+                            <th class="col-sm-1">
+                                Grand Total
+                            </th>
+
+
+                        </tr>
+                        @foreach (var item in Model.UnResolvIncident)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Tower)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PendingChange)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PendingUser)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PendingValidation)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PendingVendor)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.WorkInProgress)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.GrandTotal)
+                                </td>
+
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

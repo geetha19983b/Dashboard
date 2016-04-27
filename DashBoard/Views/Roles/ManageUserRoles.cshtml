@@ -1,0 +1,209 @@
+﻿@{
+    ViewBag.Title = "ManageUserRoles";
+}
+@Html.Raw(TempData["msg"])
+
+<div class="page-header">Manage User Roles</div>
+@Html.ActionLink("Create New Role", "Create") | @Html.ActionLink("Manage User Role", "ManageUserRoles")
+
+<div id="update-message" class="alert-info">
+</div>
+<div class="panel panel-primary small">
+    <div class="panel-heading">Role Add to User</div>
+    <div class="panel-body">
+        <div class="form-horizontal form-group-sm">
+
+            @using (Html.BeginForm("RoleAddToUser", "Roles"))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                <div class="form-group">
+                    @Html.Label("UserName :", new { @class = "control-label col-md-2 col-xs-2" })
+                    <div class="col-md-4 col-xs-4">
+                        @Html.DropDownList("UserName", (IEnumerable<SelectListItem>)ViewBag.Users, "Select ...", new { @class = "form-control" })
+                        @*Html.TextBox("UserName", null, new { @class = "form-control" })*@
+                    </div>
+                    @Html.Label("Role Name :", new { @class = "control-label col-md-2 col-xs-2" })
+                    <div class="col-md-4 col-xs-4">
+                        @Html.DropDownList("RoleName", (IEnumerable<SelectListItem>)ViewBag.Roles, "Select ...", new { @class = "form-control" })
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10 col-xs-offset-2 col-xs-10">
+                        <button type="submit" value="Save" class="btn btn-sm btn-success">
+                            <span class="glyphicon glyphicon-download"></span>
+                            Save
+                        </button>
+                    </div>
+                </div>
+
+
+            }
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-primary small">
+    <div class="panel-heading">Get Roles for a User</div>
+    <div class="panel-body">
+        <div class="form-horizontal form-group-sm">
+
+            @using (Html.BeginForm("GetRoles", "Roles"))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    @Html.Label("UserName :", new { @class = "control-label col-md-2 col-xs-2" })
+                    <div class="col-md-4 col-xs-4">
+                        @Html.DropDownList("UserName", (IEnumerable<SelectListItem>)ViewBag.Users, "Select ...", new { @class = "form-control" })
+                        @*Html.TextBox("UserName", null, new { @class = "form-control" })*@
+                    </div>
+                    <div class="col-md-4  col-xs-4">
+                        <button type="submit" value="Get Roles for this User" class="btn btn-sm btn-success">
+                            <span class="glyphicon glyphicon-search"></span>
+                            Get Roles
+                        </button>
+                    </div>
+
+                </div>
+
+
+            }
+
+            @if (ViewBag.RolesForThisUser != null)
+            {
+                <div>
+                    <div class="page-header">Roles for this user </div>
+                    <ol class="alert-success">
+                        @foreach (string s in ViewBag.RolesForThisUser)
+                        {
+                            <li>@s</li>
+                        }
+                    </ol>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+<div class="panel panel-primary small">
+    <div class="panel-heading">Delete A User from a Role</div>
+    <div class="panel-body">
+        <div class="form-horizontal form-group-sm">
+
+
+            @using (Html.BeginForm("DeleteRoleForUser", "Roles"))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                <div class="form-group">
+                    @Html.Label("UserName :", new { @class = "control-label col-md-2 col-xs-2" })
+                    <div class="col-md-4 col-xs-4">
+                        @Html.DropDownList("UserName", (IEnumerable<SelectListItem>)ViewBag.Users, "Select ...", new { @class = "form-control" })
+                        @*Html.TextBox("UserName", null, new { @class = "form-control" })*@
+                    </div>
+                    @Html.Label("Role Name :", new { @class = "control-label col-md-2 col-xs-2" })
+                    <div class="col-md-4 col-xs-4">
+                        @Html.DropDownList("RoleName", (IEnumerable<SelectListItem>)ViewBag.Roles, "Select ...", new { @class = "form-control" })
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10 col-xs-offset-2 col-xs-10">
+                        <button type="submit" value="Delete this user from role" class="btn btn-sm btn-success">
+                            <span class="glyphicon glyphicon-trash"></span>
+                            Delete
+                        </button>
+                    </div>
+                </div>
+
+
+            }
+
+
+
+        </div>
+
+    </div>
+</div>
+
+
+
+<div class="panel panel-primary small">
+    <div class="panel-heading">Map Towers to Users</div>
+    <div class="panel-body">
+        <div class="form-horizontal form-group-sm">
+
+
+            @using (Html.BeginForm("MapTowersToUsers", "Roles"))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                <div class="form-group">
+                    @Html.Label("UserName :", new { @class = "control-label col-md-2 col-xs-2" })
+                    <div class="col-md-4 col-xs-4">
+                        @Html.DropDownList("UserName", (IEnumerable<SelectListItem>)ViewBag.Users, "Select ...", new { @class = "form-control" })
+                        @*Html.TextBox("UserName", null, new { @class = "form-control" })*@
+                    </div>
+                    @Html.Label("Role Name :", new { @class = "control-label col-md-2 col-xs-2" })
+                    <div class="col-md-4 col-xs-4">
+                        @Html.DropDownList("RoleName", (IEnumerable<SelectListItem>)ViewBag.Roles, "Select ...", new { @class = "form-control" })
+                    </div>
+
+
+                    @Html.Label("Towers :", new { @class = "control-label col-md-2 col-xs-2" })
+                    <div class="col-md-3" style="font-family: verdana,arial,sans-serif; font-size: 11px; color: #333333;">
+                        <div>
+                            <div class="checkbox">
+                                <label for="Tower0">
+                                    <input name="Towers" id="Tower0" type="checkbox" class="chkbox" value="Core System" />
+                                    Core System
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label for="Tower1">
+                                    <input name="Towers" id="Tower1" type="checkbox" class="chkbox" value="Corporate System" />
+                                    Corporate System
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label for="Tower2">
+                                    <input name="Towers" id="Tower2" type="checkbox" class="chkbox" value="Customer Interaction" />
+                                    Customer Interaction
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label for="Tower3">
+                                    <input name="Towers" id="Tower3" type="checkbox" class="chkbox" value="Information Management" />
+                                    Information Management
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label for="Tower3">
+                                    <input name="Towers" id="Tower4" type="checkbox" class="chkbox" value="Third Party Integration" />
+                                    Third Party Integration
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10 col-xs-offset-2 col-xs-10">
+                        <button type="submit" value="Map User" class="btn btn-sm btn-success">
+                            <span class="glyphicon glyphicon-trash"></span>
+                            Map User
+                        </button>
+                    </div>
+                </div>
+
+
+            }
+
+
+
+        </div>
+
+    </div>
+</div>

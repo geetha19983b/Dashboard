@@ -1,0 +1,120 @@
+﻿@model DashBoard.Models.CSLMatrixVM
+
+@*<h3>Critical Service level (CSL) Performance</h3>*@
+<div class="panel panel-primary small">
+    <!-- Default panel contents -->
+    <div class="panel-heading"><i class="fa fa-bar-chart-o fa-fw"></i>CSL Summary by Metal</div>
+    <table class="table table-condensed table-responsive table-striped table-bordered table-hover">
+        <tr class="info">
+            <th class="col-sm-1">
+                Metal
+            </th>
+            <th class="col-sm-1">
+                Total Inflow
+            </th>
+            <th class="col-sm-1">
+                Total Resolved
+            </th>
+            <th class="col-sm-1">
+                March Response
+            </th>
+            <th class="col-sm-1">
+                Resolution
+            </th>
+            <th class="col-sm-1">
+                Application Availability
+            </th>
+            <th class="col-sm-1">
+                Batch effectiveness
+            </th>
+            <th class="col-sm-1">
+                Synthetic Transaction ResponseTime
+            </th>
+            <th class="col-sm-1">
+                SHI
+            </th>
+            <th class="col-sm-1">
+                RCA
+            </th>
+
+        </tr>
+        @foreach (var item in Model.CriticalSLM)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Metal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalInflow)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalResolved)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MarchResponse)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Resolution)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ApplicationAvailability)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Batcheffectiveness)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SyntheticTransactionResponseTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SHI)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RCA)
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<div class="panel panel-primary small">
+    <!-- Default panel contents -->
+    <div class="panel-heading"><i class="fa fa-bar-chart-o fa-fw"></i>CSL Trend </div>
+    <table class="table table-condensed table-responsive table-striped table-bordered table-hover">
+        <tr class="info">
+            <th class="col-sm-4">
+                Category
+            </th>
+            <th class="col-sm-2">
+                Target(%)
+            </th>
+            <th class="col-sm-2">
+                Jan(%)
+            </th>
+            <th class="col-sm-2">
+                Feb(%)
+            </th>
+            <th class="col-sm-2">
+                Mar(%)
+            </th>
+        </tr>
+        @foreach (var item in Model.CSLSummary)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Target)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Jan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Feb)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Mar)
+                </td>
+            </tr>
+        }
+    </table>
+</div>

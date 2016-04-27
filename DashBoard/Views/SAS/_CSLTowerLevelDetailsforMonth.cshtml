@@ -1,0 +1,62 @@
+﻿@model  IEnumerable<DashBoard.Models.CSLTowerLevelDetailsforMonth>
+
+@*<h3>Critical Service level (CSL) Details</h3>*@
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-primary small">
+            <!-- Default panel contents -->
+            <div class="panel-heading"><i class="fa fa-bar-chart-o fa-fw"></i>Critical Service level (CSL) Details  </div>
+            <table class="table table-condensed table-responsive table-striped table-bordered table-hover">
+                <tr class="info">
+                    <th class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Category)
+
+                    </th>
+                    <th class="col-sm-1">
+                        @Html.DisplayNameFor(model => model.Target)
+                    </th>
+                    <th class="col-sm-1">
+                        @Html.DisplayNameFor(model => model.CoreSystem)
+                    </th>
+                    <th class="col-sm-1">
+                        @Html.DisplayNameFor(model => model.CorporateSystems)
+                    </th>
+                    <th class="col-sm-1">
+                        @Html.DisplayNameFor(model => model.CustomerInteraction)
+                    </th>
+                    <th class="col-sm-1">
+                        @Html.DisplayNameFor(model => model.InformationManagement)
+                    </th>
+                    <th class="col-sm-1">
+                        @Html.DisplayNameFor(model => model.ThirdPartyIntegration)
+                    </th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Category)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CoreSystem)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CorporateSystems)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CustomerInteraction)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.InformationManagement)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ThirdPartyIntegration)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>

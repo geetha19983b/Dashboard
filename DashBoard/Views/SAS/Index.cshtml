@@ -1,0 +1,87 @@
+﻿@model IEnumerable<DashBoard.Models.CSL_Summary>
+@{
+    ViewBag.Title = "Index";
+
+
+}
+<link href="~/Content/css/common.css" rel="stylesheet" />
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#tabstrip a').click(function (e) {
+            e.preventDefault();
+
+
+
+            var strUrl = "";
+
+            if (rootDir != "/") {
+                strUrl = rootDir + "@ViewContext.RouteData.Values["controller"]/";
+            }
+            else
+            {
+                strUrl = "/@ViewContext.RouteData.Values["controller"]/";
+            }
+
+
+            var tabID = $(this).attr("href").substr(1);
+
+
+
+            $(".tab-pane").each(function () {
+                $(this).empty();
+            });
+            $.ajax({
+                //url: "/@ViewContext.RouteData.Values["controller"]/" + tabID,
+                url:strUrl + tabID,
+                cache: false,
+                type: "post",
+                dataType: "html",
+                success: function (result) {
+                    $("#" + tabID).html(result);
+                }
+            });
+            $(this).tab('show')
+        });
+    });
+</script>
+@*<div ng-app="CommentsApp">
+    <div ng-controller="CommentsController" ng-init="init()">*@
+        <!-- Tab Buttons -->
+        <ul id="tabstrip" class="nav nav-tabs" role="tablist">
+            @*<li><a href="#_CSLMatrix" role="tab" data-toggle="tab">CSLMatrix</a></li>*@
+            <li class="active"><a href="#_CSLSummary" role="tab" data-toggle="tab">CSLSummary</a></li>
+            <li><a href="#_CSLTowerLevelDetailsforMonth" role="tab" data-toggle="tab">CSLTowerDetails</a></li>
+            <li><a href="#_IncidentSummary" role="tab" data-toggle="tab">Incident Summary</a></li>
+            <li><a href="#_KPI" role="tab" data-toggle="tab">KPI</a></li>
+            <li><a href="#_PrblmManagement" role="tab" data-toggle="tab">Problem Management</a></li>
+            <li><a href="#_ActionItems" role="tab" data-toggle="tab">Action Items</a></li>
+        </ul>
+
+        <!-- Tab Content Containers -->
+        <div class="tab-content">
+            @*<div class="tab-pane fade" id="_CSLMatrix">@Html.Partial("_CSLMatrix")</div>*@
+            <div class="tab-pane fade in active" id="_CSLSummary">@Html.Partial("_CSLSummary")</div>
+            <div class="tab-pane fade" id="_CSLTowerLevelDetailsforMonth"></div>
+            <div class="tab-pane fade" id="_IncidentSummary"></div>
+            <div class="tab-pane fade" id="_KPI"></div>
+            <div class="tab-pane fade" id="_PrblmManagement"></div>
+            <div class="tab-pane fade" id="_ActionItems"></div>
+        </div>
+        
+    @*</div>
+</div>*@
+
+
+
+@section scripts{
+    <script src="~/js/libs/jquery.ui.touch-punch.min.js"></script>
+    <script src="~/js/libs/sortable.js"></script>
+    <script src="~/js/app.js"></script>
+
+    <script src="~/js/CommentsService.js"></script>
+    <script src="~/js/directives/angular.editInPlace.js"></script>
+   
+    <script src="~/js/directives/angular.ngEnter.js"></script>
+
+}

@@ -1,0 +1,352 @@
+﻿@using MvcCheckBoxList.Model
+@model DashBoard.Models.IncidentInterVM
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#PeriodFilter').change(function () {
+
+            if ($('#PeriodFilter').val() != "All") {
+
+                $('#PeriodSubFilter').html(' ');
+
+                $.getJSON('/DashBoard/PeriodSubFilter/' + $('#PeriodFilter').val(), function (data) {
+                    var items = '<option>All</option>';
+                    $.each(data, function (i, subfilter) {
+                        items += "<option value='" + subfilter.Value + "'>" + subfilter.Text + "</option>";
+                    });
+                    $('#PeriodSubFilter').html(items);
+
+
+                });
+            }
+
+
+        });
+
+        //Prepare jtable plugin
+        $('#IncidentFilterList').jtable({
+            title: 'Incident List',
+            paging: true,
+            pageSize: 10,
+            sorting: true,
+            defaultSorting: 'Tower ASC',
+            actions: {
+                listAction: '@Url.Action("IncidentsByFilter", "DashBoard")',
+                updateAction: '@Url.Action("UpdateIncident", "DashBoard")'
+            },
+            fields: {
+                //CHILD TABLE DEFINITION FOR "Tasks"
+                Tasks: {
+                    title: '',
+                    width: '5%',
+                    sorting: false,
+                    edit: false,
+                    create: false,
+                    listClass: 'child-opener-image-column',
+                    display: function (incidentData) {
+                        //Create an image that will be used to open child table
+                        var $img = $('<img class="child-opener-image" src=@Url.Content("~/Content/images/Misc/note.png") title="Edit Incident Task" />');
+                        //var $img = $('<img class="child-opener-image" src="/Content/images/Misc/note.png" title="Edit Incident Task" />');
+                        //Open child table when user clicks the image
+                        $img.click(function () {
+
+                            $('#IncidentFilterList').jtable('openChildTable',
+                                $img.closest('tr'), //Parent row
+                                {
+                                    title: incidentData.record.ParentIncident + ' - ITask Details',
+                                    actions: {
+                                        //listAction: 'TaskList?ITaskId=' + incidentData.record.ParentIncident,
+                                        listAction: '@Url.Action("TaskList", "DashBoard")?ITaskId=' + incidentData.record.ParentIncident,
+                                        //listAction: '/DashBoard/TaskList?ITaskId=' + incidentData.record.ParentIncident,
+                                        //updateAction: 'UpdateTask'
+                                        updateAction: '@Url.Action("UpdateTask")'
+                                        //updateAction: '/DashBoard/UpdateTask'
+                                    },
+                                    fields: {
+                                        Number: {
+                                            title: 'Number',
+                                            width: '10%'
+                                        },
+                                        Priority: {
+                                            title: 'Priority',
+                                            width: '10%',
+                                            edit: false
+                                        },
+                                        ServiceOffering: {
+                                            title: 'SO',
+                                            width: '10%',
+                                            edit: false
+                                        },
+                                        AssignedTo: {
+                                            title: 'AssignedTo',
+                                            width: '10%',
+                                            edit: false
+                                        },
+                                        ItState: {
+                                            title: 'State',
+                                            width: '10%',
+                                            edit: false
+                                        },
+                                        Metal: {
+                                            title: 'Metal',
+                                            width: '10%',
+                                            edit: false
+                                        },
+                                        ResponseSLA: {
+                                            title: 'ResponseSLA',
+                                            width: '10%',
+                                            edit: false,
+                                            list: false
+                                        },
+                                        ResolutionSLA: {
+                                            title: 'ResolutionSLA',
+                                            width: '10%',
+                                            edit: false,
+                                            list: false
+                                        },
+                                        Comments: {
+                                            title: 'Comments',
+                                            width: '10%',
+                                            type: 'textarea'
+                                        }
+                                    }
+                                }, function (data) { //opened handler
+                                    data.childTable.jtable('load');
+                                });
+                        });
+                        //Return image to show on the person row
+                        return $img;
+                    }
+                },
+                FeedID: {
+                    key: true,
+                    create: false,
+                    edit: false,
+                    list: false
+                },
+                ParentIncident: {
+                    title: 'Incident',
+                    width: '10%'
+                },
+                IncidentPriority: {
+                    title: 'Priority',
+                    width: '10%',
+                    edit: false
+                },
+                IncServiceOffering: {
+                    title: 'SO',
+                    width: '10%',
+                    edit: false
+                },
+                IncAssignmentGroup: {
+                    title: 'Assignment Group',
+                    width: '10%',
+                    edit: false
+                },
+                State: {
+                    title: 'State',
+                    width: '10%',
+                    edit: false
+                },
+                ResponseSLA: {
+                    title: 'ResponseSLA',
+                    width: '10%',
+                    list: false,
+                    edit: false
+
+                },
+                ResolutionSLA: {
+                    title: 'ResolutionSLA',
+                    width: '10%',
+                    list: false,
+                    edit: false
+                },
+                TimeRemaining: {
+                    title: 'TimeRemaining',
+                    width: '10%',
+                    list: false,
+                    edit: false
+                },
+                Tower: {
+                    title: 'Tower',
+                    width: '10%',
+                    edit: false
+                },
+                AssignedTo: {
+                    title: 'AssignedTo',
+                    width: '10%',
+                    edit: false
+                },
+                Metal: {
+                    title: 'Metal',
+                    width: '10%',
+                    edit: false
+                },
+                Comments: {
+                    title: 'Comments',
+                    type: 'textarea'
+                }
+            }
+
+        });
+
+        //Re-load records when user click 'load records' button.
+        $('#Search').click(function (e) {
+            e.preventDefault();
+
+
+            var selectedMetals = ($.map($("#MetalList option:selected"), function (item, i) { return $(item).text() })).join(", ");
+
+            var selectedTowers = ($.map($("#TowerList option:selected"), function (item, i) { return $(item).text() })).join(", ");
+
+            var selectedPriorities = $('input[name="PostedPriorities.PriorityIDs"]:checked').map(function () { return $(this).val().toString(); }).get().join(",");
+
+            $('#IncidentFilterList').jtable('load', {
+                incidentNo: $('#IncidentNo').val(),
+                TaskNo: $('#TaskNo').val(),
+                selmetalList: selectedMetals,
+                seltowerList: selectedTowers,
+                selpriorities: selectedPriorities,
+                perfilter: $('#PeriodFilter').val(),
+                persubfilter: $('#PeriodSubFilter').val(),
+                statefilter: $('#StateFilter').val()
+            });
+        });
+
+        //Load all records when page is first shown
+        $('#Search').click();
+        $('#Export').click(function (e) {
+            e.preventDefault();
+
+
+            var url = "@Url.Action("GridExporttoExcel", "DashBoard")";
+            window.open(url);
+        });
+        //$('#IncidentFilterList').jtable('load');
+    });
+
+</script>
+
+<h3>Incident List</h3>
+
+
+<div class="panel panel-primary small">
+    <div class="panel-heading">Search Incident</div>
+    <div class="panel-body">
+        <div class="form-inline">
+
+            <div class="form-group">
+                <label for="IncidentNo" class="control-label col-xs-pull-1 col-xs-2">Incident#</label>
+
+                <div class="col-xs-2">
+                    @Html.TextBox("IncidentNo", ViewBag.IncidentNo as string, new { @class = "form-control input-sm", placeholder = "Enter Incident No" })
+                </div>
+
+            </div>
+            <div class="form-group">
+                <label for="Metal" class="control-label col-xs-pull-2 col-xs-2">Metal</label>
+                <div class="col-xs-2">
+                    @Html.ListBox("MetalList", new SelectList(ViewBag.MetalList, "Text", "Value", ViewBag.SelectedMetal), new { size = 3, htmlAttributes = new { @class = "form-control" } })
+                    @*@Html.ListBoxFor(m => m.SelectedMetals, Model.Metals, new { size = 4 })*@
+
+                </div>
+            </div>
+            <div class="form-group">
+
+                <label for="Tower" class="control-label col-xs-pull-1 col-xs-2 col-md-pull-1 col-md-2">Tower</label>
+                <div class="col-xs-2">
+                    @Html.ListBox("TowerList", new SelectList(ViewBag.TowerList, "Text", "Value", ViewBag.SelectedTowerList), new { size = 3, htmlAttributes = new { @class = "form-control" } })
+
+                </div>
+
+
+
+            </div>
+            <div class="form-group">
+                <div class="col-xs-12">
+
+                    @Html.CheckBoxListFor(model => model.PostedPriorities.PriorityIDs,
+                                          model => model.AvailablePriority,
+                                          model => model.Priority1,
+                                          model => model.Priority1,
+                                          model => model.SelectedPriority,
+                                          new HtmlListInfo(HtmlTag.vertical_columns, 2, new { @class = "from-control" }, TextLayout.RightToLeft))
+
+
+                </div>
+            </div>
+
+
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="classWithPad"></div>
+            </div>
+        </div>
+        <div class="form-inline">
+            <div class="form-group">
+                <label for="TaskNo" class="control-label col-xs-pull-1 col-xs-2">Task#</label>
+
+                <div class="col-xs-2">
+                    @Html.TextBox("TaskNo", null, new { @class = "form-control input-sm", placeholder = "Enter Task No" })
+                </div>
+
+            </div>
+            <div class="form-group">
+                <label for="Period" class="control-label col-xs-pull-1 col-xs-2">Period</label>
+
+                <div class="col-xs-4">
+                    @Html.DropDownList("PeriodFilter", new SelectList(ViewBag.PeriodFilter, "Text", "Value", ViewBag.SelectedPeriodFilter), "All", new { @class = "form-control input-sm" })
+                </div>
+
+                <div class="col-xs-4">
+                    <select data-placeholder="All" id="PeriodSubFilter" name="PeriodSubFilter" class="form-control input-sm"></select>
+
+                </div>
+
+            </div>
+            <div class="form-group">
+                <label for="State" class="control-label col-xs-pull-1 col-xs-2">State</label>
+
+                <div class="col-xs-4">
+                    @Html.DropDownList("StateFilter", new SelectList(ViewBag.StateFilter, "Text", "Value", ViewBag.SelectedStateFilter), "All", new { @class = "form-control input-sm" })
+                </div>
+
+
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="classWithPad"></div>
+            </div>
+        </div>
+        <div class="form-inline">
+            <div class="form-group">
+                <div class="col-xs-4">
+                    <button type="submit" id="Search" value="Search" class="btn btn-sm btn-success">
+                        <span class="glyphicon glyphicon-search"></span>
+                        Search
+                    </button>
+
+                </div>
+                <div class="col-xs-4">
+                    <button type="submit" id="Export" value="Export" class="btn btn-sm btn-info">
+                        <span class="glyphicon glyphicon-export"></span>
+                        Export to Excel
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+<div id="IncidentFilterList">
+
+</div>

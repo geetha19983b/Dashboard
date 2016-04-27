@@ -1,0 +1,156 @@
+﻿@model IEnumerable<DashBoard.Models.CSL_Summary>
+
+@*<h3>Program Level Critical Service Level Summary</h3>*@
+<script>
+    angular.element(document).ready(function () {
+        angular.bootstrap($("#appElement"), ['CommentsApp']); // appElement is the html element on which you define ng-app, myApp is the name of the app
+    });
+    $(document).ready(function () {
+        $("td.mon").on('click', function () {
+            //debugger;
+            var cat = $(this).parents('tr').find('td:eq(0)').html();
+          
+            //var mon = $('th:nth-of-type(' + ($(this).index() + 1) + ')').html();
+
+            cell = this.cellIndex;
+           
+            var mon = $(this).closest('table').find('th:eq(' + cell + ')').text();
+            //alert(cat + mon);
+
+            var url = $('#summaryDialog').data('url') + '?catgry=' +cat + '&month=' + mon;
+            $.get(url, function (data) {
+                $('#summaryDialog').html(data);
+                $('#summaryDialog').modal('show');
+            });
+
+              }
+          );
+    });
+</script>
+<div class="row">
+    <div class="col-xs-12 col-md-12">
+        <div class="modal fade" id="summaryDialog" tabindex="-1" role="dialog" aria-labelledby="myModal-label"
+             aria-hidden="true" data-url='@Url.Action("SummaryInfer", "SAS")'></div>
+    </div>
+</div>
+<div class="panel panel-primary small">
+    <!-- Default panel contents -->
+    <div class="panel-heading"><i class="fa fa-bar-chart-o fa-fw"></i>Program Level Critical Service Level Summary </div>
+    <table class="table table-condensed table-responsive table-striped table-bordered table-hover">
+        <tr class="info">
+            <th class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Category)
+
+            </th>
+            <th class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Jan)
+            </th>
+            <th class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Feb)
+            </th>
+            <th class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Mar)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr class="record">
+                <td class="catg">
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+
+                <td class="mon" style="cursor:pointer">
+                    @Html.DisplayFor(modelItem => item.Jan)
+                </td>
+                <td class="mon" style="cursor:pointer">
+                    @Html.DisplayFor(modelItem => item.Feb)
+                </td>
+                <td class="mon" style="cursor:pointer">
+                    @Html.DisplayFor(modelItem => item.Mar)
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<div id="appElement">
+    <div ng-controller="CommentsController" ng-init="init('Approved')">
+
+
+        <div class="panel panel-primary small">
+            <div class="panel-heading panel-info"><span class="glyphicon glyphicon-bell"></span> Inferences </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="list-group">
+                            <a href="#" ng-repeat="commnts in model" class="list-group-item" ng-class="{'active' : currentShow === $index}" ng-click="changecommnt($index)">
+                                <span class="badge">{{commnts.CLSList.length}}</span>
+                                {{commnts.Category}}
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-9">
+                        @*<div class="row">
+                            <div class="col-md-5 col-md-push-1">
+                                <div class="form-group form-inline form-group-sm">
+
+                                    <input type="search" class="form-control" placeholder="Search" ng-model="commntSearch">
+                                   
+                                    <button class="btn btn-sm btn-primary" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-7">
+                                <ul class="nav nav-pills small commnt-filter">
+                                    <li ng-class="{'active' : show == 'All' }" ng-click="show='All'"><a href="#">All</a></li>
+                                    <li ng-class="{'active' : show == 'NotApproved' }" ng-click="show='NotApproved'"><a href="#">NotApproved</a></li>
+                                    <li ng-class="{'active' : show == 'Approved' }" ng-click="show='Approved'"><a href="#">Approved</a></li>
+                                </ul>
+                            </div>
+                        </div>*@
+                      
+                        <div class="row">
+                            <div class="col-md-7">
+                                <ul class="list-group"  ng-model="commntlist" ng-repeat="commntlist in model track by $index" ng-show="$index === currentShow">
+                                    <li class="list-group-item list-group-item-success" ng-repeat="commnt in commntlist.CLSList | filter:showFn | filter :commntSearch ">
+
+                                        @*<input class="commntCheckbox" ng-model="commnt.Approved" type="checkbox" ng-click="editcomment(commnt)">*@
+                                        @*<label class="commntCheckboxlabel"></label>*@
+                                        {{commnt.Comments}}
+                                        @*<edit-in-place value="commnt" updatefn="editcomment"></edit-in-place>*@
+                                        
+                                        
+                                        @*<a class="btn btn-danger btn-xs pull-right" ng-click="deletecommnt(commnt)">
+                                            <i class="glyphicon glyphicon-remove"></i>
+                                        </a>*@
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group form-inline form-group-sm">
+                                    <input class="form-control input-sm" id="newcommntField" type="text" ng-model="newcommnt" placeholder="Add New Comment" ng-enter>
+                                    <button ng-click="addcommnt('false')" class="btn btn-sm btn-success">Add</button>
+                                    @*<button ng-click="addcommnt('Spanish')" class="btn btn-sm btn-success">Spanish</button>
+                                    {{Language}}*@
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                @*<div class="row">
+                    <div class="debug">
+                        <p class="text-info">{{ model | json}}</p>
+                    </div>
+                </div>*@
+            </div>
+        </div>
+
+
+    </div>
+</div>
+

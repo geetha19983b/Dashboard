@@ -1,0 +1,51 @@
+﻿@model IEnumerable<DashBoard.Models.KeyPerformanceIndicator>
+
+@*<h3>Key Performance Indicators</h3>*@
+
+<div class="panel panel-primary small">
+    <!-- Default panel contents -->
+    <div class="panel-heading"><i class="fa fa-bar-chart-o fa-fw"></i>Key Performance Indicators </div>
+    <table class="table table-condensed table-responsive table-striped table-bordered table-hover">
+        <tr class="info">
+            <th class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Service)
+
+            </th>
+            <th class="col-sm-2">
+                @Html.DisplayNameFor(model => model.KPIMeasurement)
+            </th>
+            <th class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Jan)
+            </th>
+            <th class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Feb)
+            </th>
+            <th class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Mar)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Service)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.KPIMeasurement)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Jan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Feb)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Mar)
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+

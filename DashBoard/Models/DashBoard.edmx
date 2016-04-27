@@ -1,0 +1,1702 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DashboardDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="App_Availability">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceOffering" Type="varchar" MaxLength="100" />
+          <Property Name="Average" Type="float" />
+          <Property Name="Metal" Type="varchar" MaxLength="100" />
+          <Property Name="Tower" Type="varchar" MaxLength="100" />
+          <Property Name="AsOfMonth" Type="int" />
+          <Property Name="AsOfYear" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'OperationDashboardData.dbo.CriticalServicelevelMatrix' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="CriticalServicelevelMatrix">
+          <Key>
+            <PropertyRef Name="Metal" />
+          </Key>
+          <Property Name="Metal" Type="varchar(max)" Nullable="false" />
+          <Property Name="TotalInflow" Type="varchar(max)" />
+          <Property Name="TotalResolved" Type="varchar(max)" />
+          <Property Name="MarchResponse" Type="varchar(max)" />
+          <Property Name="Resolution" Type="varchar(max)" />
+          <Property Name="ApplicationAvailability" Type="varchar(max)" />
+          <Property Name="Batcheffectiveness" Type="varchar(max)" />
+          <Property Name="SyntheticTransactionResponseTime" Type="varchar(max)" />
+          <Property Name="SHI" Type="varchar(max)" />
+          <Property Name="RCA" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="CSL_Summary">
+          <Key>
+            <PropertyRef Name="Category" />
+          </Key>
+          <Property Name="Category" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Target" Type="float" />
+          <Property Name="Jan" Type="float" />
+          <Property Name="Feb" Type="float" />
+          <Property Name="Mar" Type="float" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'OperationDashboardData.dbo.CSL_table' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="CSL_table">
+          <Key>
+            <PropertyRef Name="Tower" />
+            <PropertyRef Name="Category" />
+          </Key>
+          <Property Name="Tower" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AsOfYear" Type="int" />
+          <Property Name="AsOfMonth" Type="int" />
+          <Property Name="Category" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Value" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="Metal" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'OperationDashboardData.dbo.CSLFields' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="CSLFields">
+          <Key>
+            <PropertyRef Name="Category" />
+          </Key>
+          <Property Name="Category" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Active" Type="char" MaxLength="1" />
+          <Property Name="Target" Type="decimal" Precision="5" Scale="2" />
+        </EntityType>
+        <EntityType Name="CSLInferences">
+          <Key>
+            <PropertyRef Name="CommentID" />
+          </Key>
+          <Property Name="Category" Type="varchar" MaxLength="100" />
+          <Property Name="Comments" Type="varchar(max)" Nullable="false" />
+          <Property Name="EnteredOn" Type="datetime" />
+          <Property Name="EnteredBy" Type="varchar" MaxLength="100" />
+          <Property Name="Approved" Type="bit" />
+          <Property Name="ApprovedOn" Type="datetime" />
+          <Property Name="ApprovedBy" Type="varchar" MaxLength="100" />
+          <Property Name="Status" Type="varchar" MaxLength="25" />
+          <Property Name="CommentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'OperationDashboardData.dbo.CSLTowerLevelDetailsforMonth' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="CSLTowerLevelDetailsforMonth">
+          <Key>
+            <PropertyRef Name="Category" />
+          </Key>
+          <Property Name="Category" Type="varchar(max)" Nullable="false" />
+          <Property Name="Target" Type="varchar(max)" />
+          <Property Name="CoreSystem" Type="varchar(max)" />
+          <Property Name="CorporateSystems" Type="varchar(max)" />
+          <Property Name="CustomerInteraction" Type="varchar(max)" />
+          <Property Name="InformationManagement" Type="varchar(max)" />
+          <Property Name="ThirdPartyIntegration" Type="varchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'OperationDashboardData.dbo.feed' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="feed">
+          <Key>
+            <PropertyRef Name="FeedID" />
+          </Key>
+          <Property Name="FeedID" Type="int" Nullable="false" />
+          <Property Name="ParentIncident" Type="varchar" MaxLength="100" />
+          <Property Name="IncidentPriority" Type="varchar" MaxLength="100" />
+          <Property Name="IncServiceOffering" Type="varchar" MaxLength="100" />
+          <Property Name="IncAssignmentGroup" Type="varchar" MaxLength="100" />
+          <Property Name="IncOwnershipGroup" Type="varchar" MaxLength="100" />
+          <Property Name="Opened" Type="smalldatetime" />
+          <Property Name="State" Type="varchar" MaxLength="100" />
+          <Property Name="ResponseSLAText" Type="varchar" MaxLength="100" />
+          <Property Name="ResponseActual" Type="int" />
+          <Property Name="ResponseSLA" Type="int" />
+          <Property Name="ResponseTarget" Type="int" />
+          <Property Name="ResolutionActual" Type="int" />
+          <Property Name="ResolutionSLA" Type="int" />
+          <Property Name="ResolutionTarget" Type="int" />
+          <Property Name="TimeRemaining" Type="varchar" MaxLength="100" />
+          <Property Name="PotentialBreach" Type="varchar" MaxLength="10" />
+          <Property Name="ITaskNumber" Type="varchar(max)" />
+          <Property Name="Tower" Type="varchar" MaxLength="100" />
+          <Property Name="TowerA1" Type="varchar" MaxLength="100" />
+          <Property Name="ShortDescription" Type="varchar" MaxLength="100" />
+          <Property Name="AssignedTo" Type="varchar" MaxLength="100" />
+          <Property Name="Metal" Type="varchar" MaxLength="100" />
+          <Property Name="DaysOpen" Type="int" />
+          <Property Name="Aging" Type="varchar" MaxLength="10" />
+          <Property Name="Comments" Type="varchar" MaxLength="200" />
+          <Property Name="Tier" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Feed_Snapshot">
+          <Key>
+            <PropertyRef Name="FeedID" />
+          </Key>
+          <Property Name="FeedID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentIncident" Type="varchar" MaxLength="100" />
+          <Property Name="IncidentPriority" Type="varchar" MaxLength="100" />
+          <Property Name="IncServiceOffering" Type="varchar" MaxLength="100" />
+          <Property Name="IncAssignmentGroup" Type="varchar" MaxLength="100" />
+          <Property Name="IncOwnershipGroup" Type="varchar" MaxLength="100" />
+          <Property Name="Opened" Type="datetime" />
+          <Property Name="State" Type="varchar" MaxLength="100" />
+          <Property Name="ResponseSLAText" Type="varchar" MaxLength="100" />
+          <Property Name="ResponseActual" Type="int" />
+          <Property Name="ResponseSLA" Type="int" />
+          <Property Name="ResponseTarget" Type="int" />
+          <Property Name="ResolutionActual" Type="int" />
+          <Property Name="ResolutionSLA" Type="int" />
+          <Property Name="ResolutionTarget" Type="int" />
+          <Property Name="TimeRemaining" Type="varchar" MaxLength="100" />
+          <Property Name="PotentialBreach" Type="varchar" MaxLength="10" />
+          <Property Name="ITaskNumber" Type="varchar(max)" />
+          <Property Name="Tower" Type="varchar" MaxLength="100" />
+          <Property Name="TowerA1" Type="varchar" MaxLength="100" />
+          <Property Name="ShortDescription" Type="varchar" MaxLength="100" />
+          <Property Name="AssignedTo" Type="varchar" MaxLength="100" />
+          <Property Name="Metal" Type="varchar" MaxLength="100" />
+          <Property Name="DaysOpen" Type="int" />
+          <Property Name="Aging" Type="varchar" MaxLength="10" />
+          <Property Name="Comments" Type="varchar" MaxLength="200" />
+          <Property Name="Tier" Type="varchar" MaxLength="10" />
+          <Property Name="AsOfMonth" Type="int" />
+          <Property Name="AsOfYear" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'OperationDashboardData.dbo.Incident_summary' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Incident_summary">
+          <Key>
+            <PropertyRef Name="Tower" />
+          </Key>
+          <Property Name="Tower" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="TotalIncidents" Type="int" />
+          <Property Name="TotalMarInflow" Type="int" />
+          <Property Name="TotalResolvedandpercenttoTotal" Type="varchar" MaxLength="50" />
+          <Property Name="TotalResolutionSLA" Type="varchar" MaxLength="50" />
+          <Property Name="AgingDays3" Type="int" />
+          <Property Name="AgingDaysgreaterthan3" Type="int" />
+          <Property Name="AgingDaysgreaterthan7" Type="int" />
+          <Property Name="AgingDaysgreaterthan10" Type="int" />
+          <Property Name="AgingTotal" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'OperationDashboardData.dbo.IncidentFeedSummary' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="IncidentFeedSummary">
+          <Key>
+            <PropertyRef Name="Tower" />
+          </Key>
+          <Property Name="Tower" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Inflow" Type="int" />
+          <Property Name="Resolved" Type="int" />
+          <Property Name="ResolutionSLA" Type="int" />
+          <Property Name="ResponseSLA" Type="int" />
+          <Property Name="Backlog" Type="int" />
+          <Property Name="Year" Type="int" />
+          <Property Name="MM" Type="int" />
+          <Property Name="Breached" Type="int" />
+          <Property Name="WIP" Type="int" />
+          <Property Name="IncidentPriority" Type="varchar" MaxLength="25" />
+          <Property Name="Metal" Type="varchar" MaxLength="15" />
+          <Property Name="Tier" Type="varchar" MaxLength="10" />
+          <Property Name="AsOfMonth" Type="int" />
+          <Property Name="AsOfYear" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'OperationDashboardData.dbo.KeyPerformanceIndicator' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="KeyPerformanceIndicator">
+          <Key>
+            <PropertyRef Name="Service" />
+          </Key>
+          <Property Name="Service" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="KPIMeasurement" Type="varchar" MaxLength="50" />
+          <Property Name="Jan" Type="varchar" MaxLength="20" />
+          <Property Name="Feb" Type="varchar" MaxLength="20" />
+          <Property Name="Mar" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'OperationDashboardData.dbo.Metal' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Metal">
+          <Key>
+            <PropertyRef Name="Metal" />
+          </Key>
+          <Property Name="Metal" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Active" Type="char" MaxLength="1" />
+          <Property Name="linecolor" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Onboarding">
+          <Key>
+            <PropertyRef Name="ResourceId" />
+          </Key>
+          <Property Name="ResourceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="LanId" Type="varchar" MaxLength="20" />
+          <Property Name="ResourceLocationType" Type="varchar" MaxLength="50" />
+          <Property Name="CurrentEmployee" Type="bit" />
+          <Property Name="OnboardingDate" Type="datetime" />
+          <Property Name="Comments" Type="varchar" MaxLength="200" />
+          <Property Name="OffboardingDate" Type="datetime" />
+          <Property Name="Tower" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'OperationDashboardData.dbo.Priorities' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Priorities">
+          <Key>
+            <PropertyRef Name="PriorityId" />
+          </Key>
+          <Property Name="PriorityId" Type="int" Nullable="false" />
+          <Property Name="Priority" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="RCA">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Number" Type="varchar" MaxLength="100" />
+          <Property Name="RCA_State" Type="varchar" MaxLength="100" />
+          <Property Name="RCA_Priority" Type="varchar" MaxLength="100" />
+          <Property Name="ParentIncident" Type="varchar" MaxLength="100" />
+          <Property Name="ParentIncident_State" Type="varchar" MaxLength="100" />
+          <Property Name="ProblemTicket" Type="varchar" MaxLength="100" />
+          <Property Name="RCA_Status" Type="varchar" MaxLength="100" />
+          <Property Name="ProblemTicketOpenDate" Type="varchar" MaxLength="100" />
+          <Property Name="SLABreach" Type="varchar" MaxLength="100" />
+          <Property Name="Comments" Type="varchar(max)" />
+          <Property Name="Parent_IncidentPriority" Type="varchar" MaxLength="100" />
+          <Property Name="AssignmentGroup" Type="varchar" MaxLength="100" />
+          <Property Name="AssignedTo" Type="varchar" MaxLength="100" />
+          <Property Name="ShortDescription" Type="varchar" MaxLength="100" />
+          <Property Name="Closed" Type="date" />
+          <Property Name="ServiceOffering" Type="varchar" MaxLength="100" />
+          <Property Name="Opened" Type="date" />
+          <Property Name="Openedby" Type="varchar" MaxLength="100" />
+          <Property Name="Metal" Type="varchar" MaxLength="100" />
+          <Property Name="tower" Type="varchar(max)" />
+          <Property Name="AsOfMonth" Type="int" />
+          <Property Name="AsOfYear" Type="int" />
+          <Property Name="SLAMet" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'OperationDashboardData.dbo.SummaryPeriod' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="SummaryPeriod">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Year" Type="int" />
+          <Property Name="MM" Type="int" />
+          <Property Name="Mon" Type="varchar" MaxLength="10" />
+          <Property Name="Week" Type="int" />
+          <Property Name="Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Synthetic_Trans">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Transactions" Type="varchar" MaxLength="100" />
+          <Property Name="TargetInSecs" Type="float" />
+          <Property Name="ActualInSecs" Type="float" />
+          <Property Name="SyntheticTrans_Met" Type="varchar" MaxLength="100" />
+          <Property Name="AsOfMonth" Type="int" />
+          <Property Name="AsOfYear" Type="int" />
+          <Property Name="tower" Type="varchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'OperationDashboardData.dbo.tblActionItems' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tblActionItems">
+          <Key>
+            <PropertyRef Name="Sno" />
+          </Key>
+          <Property Name="Sno" Type="int" Nullable="false" />
+          <Property Name="Action Item" Type="varchar(max)" />
+          <Property Name="Owner" Type="varchar" MaxLength="100" />
+          <Property Name="ETA" Type="varchar" MaxLength="100" />
+          <Property Name="Status" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'OperationDashboardData.dbo.tblProblemSummary' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tblProblemSummary">
+          <Key>
+            <PropertyRef Name="Summary" />
+          </Key>
+          <Property Name="Summary" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Nov2015" Type="int" />
+          <Property Name="Dec2015" Type="int" />
+          <Property Name="Jan2016" Type="int" />
+          <Property Name="Feb2016" Type="int" />
+          <Property Name="Mar2016" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'OperationDashboardData.dbo.tblWeeklyProblemmanagement' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tblWeeklyProblemmanagement">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Problem" Type="varchar" MaxLength="100" />
+          <Property Name="OpenedOn" Type="varchar" MaxLength="20" />
+          <Property Name="Tower" Type="varchar" MaxLength="100" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="StatusandETA" Type="varchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'OperationDashboardData.dbo.Tower2' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Tower2">
+          <Key>
+            <PropertyRef Name="tower_alias" />
+          </Key>
+          <Property Name="Tower" Type="varchar" MaxLength="100" />
+          <Property Name="Active" Type="char" MaxLength="1" />
+          <Property Name="linecolor" Type="varchar" MaxLength="50" />
+          <Property Name="tower_alias" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'OperationDashboardData.dbo.UnResolvedIncidents' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="UnResolvedIncidents">
+          <Key>
+            <PropertyRef Name="Tower" />
+          </Key>
+          <Property Name="Tower" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PendingChange" Type="varchar" MaxLength="50" />
+          <Property Name="PendingUser" Type="varchar" MaxLength="50" />
+          <Property Name="PendingValidation" Type="varchar" MaxLength="50" />
+          <Property Name="PendingVendor" Type="varchar" MaxLength="50" />
+          <Property Name="WorkInProgress" Type="varchar" MaxLength="50" />
+          <Property Name="GrandTotal" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="UserTower">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Tower" Type="varchar" MaxLength="50" />
+          <Property Name="TowerValue" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Function Name="GetIncidentListByCondn" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OrderByClause" Type="varchar" Mode="In" />
+          <Parameter Name="WhereClause" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetIncidentListByWhereCondn" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OrderByClause" Type="varchar" Mode="In" />
+          <Parameter Name="WhereClause" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GETIncidentsBySplConditions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Cndn" Type="varchar" Mode="In" />
+          <Parameter Name="tower" Type="varchar(max)" Mode="In" />
+          <Parameter Name="month" Type="varchar(max)" Mode="In" />
+          <Parameter Name="sort" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetIncidentsList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OrderByClause" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetTasksList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="incID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="MapTowerToUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+          <Parameter Name="Tower" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="qfn_JsonEscape" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar(max)">
+          <Parameter Name="value" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_GetAgingData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Tower" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_GetBacklogData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Tower" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_GetChartFeedSummaryData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_GetChartSummaryData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="Sp_GetChrtsDataTest" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_GetFilterConditions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FilterCondn" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UpdateIncident" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FeedID" Type="int" Mode="In" />
+          <Parameter Name="Comments" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UpdateTask" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Number" Type="varchar" Mode="In" />
+          <Parameter Name="Comments" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="DashboardDBModelStoreContainer">
+          <EntitySet Name="App_Availability" EntityType="Self.App_Availability" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CSL_Summary" EntityType="Self.CSL_Summary" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CSLInferences" EntityType="Self.CSLInferences" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Feed_Snapshot" EntityType="Self.Feed_Snapshot" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Onboarding" EntityType="Self.Onboarding" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RCA" EntityType="Self.RCA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Synthetic_Trans" EntityType="Self.Synthetic_Trans" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserTower" EntityType="Self.UserTower" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CriticalServicelevelMatrix" EntityType="Self.CriticalServicelevelMatrix" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [CriticalServicelevelMatrix].[Metal] AS [Metal], 
+    [CriticalServicelevelMatrix].[TotalInflow] AS [TotalInflow], 
+    [CriticalServicelevelMatrix].[TotalResolved] AS [TotalResolved], 
+    [CriticalServicelevelMatrix].[MarchResponse] AS [MarchResponse], 
+    [CriticalServicelevelMatrix].[Resolution] AS [Resolution], 
+    [CriticalServicelevelMatrix].[ApplicationAvailability] AS [ApplicationAvailability], 
+    [CriticalServicelevelMatrix].[Batcheffectiveness] AS [Batcheffectiveness], 
+    [CriticalServicelevelMatrix].[SyntheticTransactionResponseTime] AS [SyntheticTransactionResponseTime], 
+    [CriticalServicelevelMatrix].[SHI] AS [SHI], 
+    [CriticalServicelevelMatrix].[RCA] AS [RCA]
+    FROM [dbo].[CriticalServicelevelMatrix] AS [CriticalServicelevelMatrix]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="CSL_table" EntityType="Self.CSL_table" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [CSL_table].[Tower] AS [Tower], 
+    [CSL_table].[AsOfYear] AS [AsOfYear], 
+    [CSL_table].[AsOfMonth] AS [AsOfMonth], 
+    [CSL_table].[Category] AS [Category], 
+    [CSL_table].[Value] AS [Value], 
+    [CSL_table].[Metal] AS [Metal]
+    FROM [dbo].[CSL_table] AS [CSL_table]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="CSLFields" EntityType="Self.CSLFields" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [CSLFields].[Category] AS [Category], 
+    [CSLFields].[Active] AS [Active], 
+    [CSLFields].[Target] AS [Target]
+    FROM [dbo].[CSLFields] AS [CSLFields]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="CSLTowerLevelDetailsforMonth" EntityType="Self.CSLTowerLevelDetailsforMonth" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [CSLTowerLevelDetailsforMonth].[Category] AS [Category], 
+    [CSLTowerLevelDetailsforMonth].[Target] AS [Target], 
+    [CSLTowerLevelDetailsforMonth].[CoreSystem] AS [CoreSystem], 
+    [CSLTowerLevelDetailsforMonth].[CorporateSystems] AS [CorporateSystems], 
+    [CSLTowerLevelDetailsforMonth].[CustomerInteraction] AS [CustomerInteraction], 
+    [CSLTowerLevelDetailsforMonth].[InformationManagement] AS [InformationManagement], 
+    [CSLTowerLevelDetailsforMonth].[ThirdPartyIntegration] AS [ThirdPartyIntegration]
+    FROM [dbo].[CSLTowerLevelDetailsforMonth] AS [CSLTowerLevelDetailsforMonth]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="feed" EntityType="Self.feed" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [feed].[FeedID] AS [FeedID], 
+    [feed].[ParentIncident] AS [ParentIncident], 
+    [feed].[IncidentPriority] AS [IncidentPriority], 
+    [feed].[IncServiceOffering] AS [IncServiceOffering], 
+    [feed].[IncAssignmentGroup] AS [IncAssignmentGroup], 
+    [feed].[IncOwnershipGroup] AS [IncOwnershipGroup], 
+    [feed].[Opened] AS [Opened], 
+    [feed].[State] AS [State], 
+    [feed].[ResponseSLAText] AS [ResponseSLAText], 
+    [feed].[ResponseActual] AS [ResponseActual], 
+    [feed].[ResponseSLA] AS [ResponseSLA], 
+    [feed].[ResponseTarget] AS [ResponseTarget], 
+    [feed].[ResolutionActual] AS [ResolutionActual], 
+    [feed].[ResolutionSLA] AS [ResolutionSLA], 
+    [feed].[ResolutionTarget] AS [ResolutionTarget], 
+    [feed].[TimeRemaining] AS [TimeRemaining], 
+    [feed].[PotentialBreach] AS [PotentialBreach], 
+    [feed].[ITaskNumber] AS [ITaskNumber], 
+    [feed].[Tower] AS [Tower], 
+    [feed].[TowerA1] AS [TowerA1], 
+    [feed].[ShortDescription] AS [ShortDescription], 
+    [feed].[AssignedTo] AS [AssignedTo], 
+    [feed].[Metal] AS [Metal], 
+    [feed].[DaysOpen] AS [DaysOpen], 
+    [feed].[Aging] AS [Aging], 
+    [feed].[Comments] AS [Comments], 
+    [feed].[Tier] AS [Tier]
+    FROM [dbo].[feed] AS [feed]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Incident_summary" EntityType="Self.Incident_summary" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Incident_summary].[Tower] AS [Tower], 
+    [Incident_summary].[TotalIncidents] AS [TotalIncidents], 
+    [Incident_summary].[TotalMarInflow] AS [TotalMarInflow], 
+    [Incident_summary].[TotalResolvedandpercenttoTotal] AS [TotalResolvedandpercenttoTotal], 
+    [Incident_summary].[TotalResolutionSLA] AS [TotalResolutionSLA], 
+    [Incident_summary].[AgingDays3] AS [AgingDays3], 
+    [Incident_summary].[AgingDaysgreaterthan3] AS [AgingDaysgreaterthan3], 
+    [Incident_summary].[AgingDaysgreaterthan7] AS [AgingDaysgreaterthan7], 
+    [Incident_summary].[AgingDaysgreaterthan10] AS [AgingDaysgreaterthan10], 
+    [Incident_summary].[AgingTotal] AS [AgingTotal]
+    FROM [dbo].[Incident_summary] AS [Incident_summary]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="IncidentFeedSummary" EntityType="Self.IncidentFeedSummary" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [IncidentFeedSummary].[Tower] AS [Tower], 
+    [IncidentFeedSummary].[Inflow] AS [Inflow], 
+    [IncidentFeedSummary].[Resolved] AS [Resolved], 
+    [IncidentFeedSummary].[ResolutionSLA] AS [ResolutionSLA], 
+    [IncidentFeedSummary].[ResponseSLA] AS [ResponseSLA], 
+    [IncidentFeedSummary].[Backlog] AS [Backlog], 
+    [IncidentFeedSummary].[Year] AS [Year], 
+    [IncidentFeedSummary].[MM] AS [MM], 
+    [IncidentFeedSummary].[Breached] AS [Breached], 
+    [IncidentFeedSummary].[WIP] AS [WIP], 
+    [IncidentFeedSummary].[IncidentPriority] AS [IncidentPriority], 
+    [IncidentFeedSummary].[Metal] AS [Metal], 
+    [IncidentFeedSummary].[Tier] AS [Tier], 
+    [IncidentFeedSummary].[AsOfMonth] AS [AsOfMonth], 
+    [IncidentFeedSummary].[AsOfYear] AS [AsOfYear]
+    FROM [dbo].[IncidentFeedSummary] AS [IncidentFeedSummary]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="KeyPerformanceIndicator" EntityType="Self.KeyPerformanceIndicator" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [KeyPerformanceIndicator].[Service] AS [Service], 
+    [KeyPerformanceIndicator].[KPIMeasurement] AS [KPIMeasurement], 
+    [KeyPerformanceIndicator].[Jan] AS [Jan], 
+    [KeyPerformanceIndicator].[Feb] AS [Feb], 
+    [KeyPerformanceIndicator].[Mar] AS [Mar]
+    FROM [dbo].[KeyPerformanceIndicator] AS [KeyPerformanceIndicator]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Metal" EntityType="Self.Metal" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Metal].[Metal] AS [Metal], 
+    [Metal].[Active] AS [Active], 
+    [Metal].[linecolor] AS [linecolor]
+    FROM [dbo].[Metal] AS [Metal]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Priorities" EntityType="Self.Priorities" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Priorities].[PriorityId] AS [PriorityId], 
+    [Priorities].[Priority] AS [Priority]
+    FROM [dbo].[Priorities] AS [Priorities]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="SummaryPeriod" EntityType="Self.SummaryPeriod" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [SummaryPeriod].[Year] AS [Year], 
+    [SummaryPeriod].[MM] AS [MM], 
+    [SummaryPeriod].[Mon] AS [Mon], 
+    [SummaryPeriod].[Week] AS [Week], 
+    [SummaryPeriod].[Id] AS [Id]
+    FROM [dbo].[SummaryPeriod] AS [SummaryPeriod]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tblActionItems" EntityType="Self.tblActionItems" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tblActionItems].[Sno] AS [Sno], 
+    [tblActionItems].[Action Item] AS [Action Item], 
+    [tblActionItems].[Owner] AS [Owner], 
+    [tblActionItems].[ETA] AS [ETA], 
+    [tblActionItems].[Status] AS [Status]
+    FROM [dbo].[tblActionItems] AS [tblActionItems]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tblProblemSummary" EntityType="Self.tblProblemSummary" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tblProblemSummary].[Summary] AS [Summary], 
+    [tblProblemSummary].[Nov2015] AS [Nov2015], 
+    [tblProblemSummary].[Dec2015] AS [Dec2015], 
+    [tblProblemSummary].[Jan2016] AS [Jan2016], 
+    [tblProblemSummary].[Feb2016] AS [Feb2016], 
+    [tblProblemSummary].[Mar2016] AS [Mar2016]
+    FROM [dbo].[tblProblemSummary] AS [tblProblemSummary]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tblWeeklyProblemmanagement" EntityType="Self.tblWeeklyProblemmanagement" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tblWeeklyProblemmanagement].[Id] AS [Id], 
+    [tblWeeklyProblemmanagement].[Problem] AS [Problem], 
+    [tblWeeklyProblemmanagement].[OpenedOn] AS [OpenedOn], 
+    [tblWeeklyProblemmanagement].[Tower] AS [Tower], 
+    [tblWeeklyProblemmanagement].[Description] AS [Description], 
+    [tblWeeklyProblemmanagement].[StatusandETA] AS [StatusandETA]
+    FROM [dbo].[tblWeeklyProblemmanagement] AS [tblWeeklyProblemmanagement]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Tower2" EntityType="Self.Tower2" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Tower2].[Tower] AS [Tower], 
+    [Tower2].[Active] AS [Active], 
+    [Tower2].[linecolor] AS [linecolor], 
+    [Tower2].[tower_alias] AS [tower_alias]
+    FROM [dbo].[Tower2] AS [Tower2]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="UnResolvedIncidents" EntityType="Self.UnResolvedIncidents" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [UnResolvedIncidents].[Tower] AS [Tower], 
+    [UnResolvedIncidents].[PendingChange] AS [PendingChange], 
+    [UnResolvedIncidents].[PendingUser] AS [PendingUser], 
+    [UnResolvedIncidents].[PendingValidation] AS [PendingValidation], 
+    [UnResolvedIncidents].[PendingVendor] AS [PendingVendor], 
+    [UnResolvedIncidents].[WorkInProgress] AS [WorkInProgress], 
+    [UnResolvedIncidents].[GrandTotal] AS [GrandTotal]
+    FROM [dbo].[UnResolvedIncidents] AS [UnResolvedIncidents]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DashboardDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CSL_Summary">
+          <Key>
+            <PropertyRef Name="Category" />
+          </Key>
+          <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Target" Type="Double" />
+          <Property Name="Jan" Type="Double" />
+          <Property Name="Feb" Type="Double" />
+          <Property Name="Mar" Type="Double" />
+        </EntityType>
+        <EntityType Name="CriticalServicelevelMatrix">
+          <Key>
+            <PropertyRef Name="Metal" />
+          </Key>
+          <Property Name="Metal" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TotalInflow" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TotalResolved" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="MarchResponse" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Resolution" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ApplicationAvailability" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Batcheffectiveness" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SyntheticTransactionResponseTime" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SHI" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="RCA" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="DashboardDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CSL_Summary" EntityType="Self.CSL_Summary" />
+          <EntitySet Name="CriticalServicelevelMatrices" EntityType="Self.CriticalServicelevelMatrix" />
+          <FunctionImport Name="sp_GetFilterConditions" ReturnType="Collection(DashboardDBModel.sp_GetFilterConditions_Result)">
+          <Parameter Name="FilterCondn" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetIncidentsList" ReturnType="Collection(DashboardDBModel.GetIncidentsList_Result)">
+          <Parameter Name="OrderByClause" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetIncidentListByCondn" ReturnType="Collection(DashboardDBModel.GetIncidentListByCondn_Result1)">
+            <Parameter Name="OrderByClause" Mode="In" Type="String" />
+            <Parameter Name="WhereClause" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetIncidentListByWhereCondn" ReturnType="Collection(DashboardDBModel.GetIncidentListByWhereCondn_Result)">
+            <Parameter Name="OrderByClause" Mode="In" Type="String" />
+            <Parameter Name="WhereClause" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetTasksList" ReturnType="Collection(DashboardDBModel.GetTasksList_Result1)">
+          <Parameter Name="incID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateIncident">
+            <Parameter Name="FeedID" Mode="In" Type="Int32" />
+            <Parameter Name="Comments" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="Metals" EntityType="DashboardDBModel.Metal" />
+          <EntitySet Name="feeds" EntityType="DashboardDBModel.feed" />
+          <EntitySet Name="Priorities" EntityType="DashboardDBModel.Priority" />
+          <EntitySet Name="SummaryPeriods" EntityType="DashboardDBModel.SummaryPeriod" />
+          <EntitySet Name="CSLTowerLevelDetailsforMonths" EntityType="DashboardDBModel.CSLTowerLevelDetailsforMonth" />
+          <FunctionImport Name="sp_GetChartSummaryData" ReturnType="Collection(DashboardDBModel.sp_GetChartSummaryData_Result)" />
+          <FunctionImport Name="sp_GetChartFeedSummaryData" ReturnType="Collection(String)" />
+          <EntitySet Name="Incident_summary" EntityType="DashboardDBModel.Incident_summary" />
+          <EntitySet Name="UnResolvedIncidents" EntityType="DashboardDBModel.UnResolvedIncident" />
+          <EntitySet Name="KeyPerformanceIndicators" EntityType="DashboardDBModel.KeyPerformanceIndicator" />
+          <EntitySet Name="tblProblemSummaries" EntityType="DashboardDBModel.tblProblemSummary" />
+          <EntitySet Name="tblWeeklyProblemmanagements" EntityType="DashboardDBModel.tblWeeklyProblemmanagement" />
+          <EntitySet Name="tblActionItems" EntityType="DashboardDBModel.tblActionItem" />
+          <FunctionImport Name="UpdateTask">
+            <Parameter Name="Number" Mode="In" Type="String" />
+            <Parameter Name="Comments" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="IncidentFeedSummaries" EntityType="DashboardDBModel.IncidentFeedSummary" />
+          <FunctionImport Name="GETIncidentsBySplConditions" ReturnType="Collection(DashboardDBModel.GETIncidentsBySplConditions_Result)">
+            <Parameter Name="Cndn" Mode="In" Type="String" />
+            <Parameter Name="tower" Mode="In" Type="String" />
+            <Parameter Name="month" Mode="In" Type="String" />
+            <Parameter Name="sort" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetAgingData" ReturnType="Collection(String)" >
+          <Parameter Name="Tower" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="Tower2" EntityType="DashboardDBModel.Tower2" />
+          <FunctionImport Name="sp_GetBacklogData" ReturnType="Collection(String)" >
+            <Parameter Name="Tower" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="CSLInferences" EntityType="DashboardDBModel.CSLInference" />
+          <EntitySet Name="CSL_table" EntityType="DashboardDBModel.CSL_table" />
+          <EntitySet Name="CSLFields" EntityType="DashboardDBModel.CSLField" />
+          <EntitySet Name="App_Availability" EntityType="DashboardDBModel.App_Availability" />
+          <EntitySet Name="RCAs" EntityType="DashboardDBModel.RCA" />
+          <EntitySet Name="Synthetic_Trans" EntityType="DashboardDBModel.Synthetic_Trans" />
+          <EntitySet Name="Feed_Snapshot" EntityType="DashboardDBModel.Feed_Snapshot" />
+          <FunctionImport Name="Sp_GetChrtsDataTest" ReturnType="Collection(DashboardDBModel.Sp_GetChrtsDataTest_Result)" />
+          <EntitySet Name="Onboardings" EntityType="DashboardDBModel.Onboarding" />
+          <EntitySet Name="UserTowers" EntityType="DashboardDBModel.UserTower" />
+          <FunctionImport Name="MapTowerToUser">
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="Tower" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="sp_GetFilterConditions_Result">
+          <Property Type="Int64" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Value" Nullable="true" MaxLength="255" />
+        </ComplexType>
+        <ComplexType Name="GetIncidentsList_Result">
+          <Property Type="Int32" Name="FeedID" Nullable="false" />
+          <Property Type="String" Name="ParentIncident" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="IncidentPriority" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="IncServiceOffering" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="IncAssignmentGroup" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="Opened" Nullable="true" Precision="16" />
+          <Property Type="String" Name="State" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="ResponseSLA" Nullable="true" />
+          <Property Type="Int32" Name="ResolutionSLA" Nullable="true" />
+          <Property Type="String" Name="TimeRemaining" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Tower" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="AssignedTo" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Metal" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Comments" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="GetIncidentListByCondn_Result">
+          <Property Type="Int32" Name="FeedID" Nullable="false" />
+          <Property Type="String" Name="ParentIncident" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="IncidentPriority" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="IncServiceOffering" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="IncAssignmentGroup" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="Opened" Nullable="true" Precision="16" />
+          <Property Type="String" Name="State" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="ResponseSLA" Nullable="true" />
+          <Property Type="Int32" Name="ResolutionSLA" Nullable="true" />
+          <Property Type="String" Name="TimeRemaining" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Tower" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="AssignedTo" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Metal" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Comments" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="GetIncidentListByCondn_Result1">
+          <Property Type="Int32" Name="FeedID" Nullable="false" />
+          <Property Type="String" Name="ParentIncident" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="IncidentPriority" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="IncServiceOffering" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="IncAssignmentGroup" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="Opened" Nullable="true" Precision="16" />
+          <Property Type="String" Name="State" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="ResponseSLA" Nullable="true" />
+          <Property Type="Int32" Name="ResolutionSLA" Nullable="true" />
+          <Property Type="String" Name="TimeRemaining" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Tower" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="AssignedTo" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Metal" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Comments" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="GetIncidentListByWhereCondn_Result">
+          <Property Type="Int32" Name="FeedID" Nullable="false" />
+          <Property Type="String" Name="ParentIncident" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="IncidentPriority" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="IncServiceOffering" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="IncAssignmentGroup" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="Opened" Nullable="true" Precision="16" />
+          <Property Type="String" Name="State" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="ResponseSLA" Nullable="true" />
+          <Property Type="Int32" Name="ResolutionSLA" Nullable="true" />
+          <Property Type="String" Name="TimeRemaining" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Tower" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="AssignedTo" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Metal" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Comments" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="GetTasksList_Result">
+          <Property Type="String" Name="Number" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Priority" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="serviceOffering" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="AssignedTo" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="ItState" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Metal" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="ResponseSLA" Nullable="true" />
+          <Property Type="Int32" Name="ResolutionSLA" Nullable="true" />
+          <Property Type="String" Name="Comments" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="GetTasksList_Result1">
+          <Property Type="String" Name="Number" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Priority" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="serviceOffering" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="AssignedTo" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="ItState" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Metal" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="ResponseSLA" Nullable="true" />
+          <Property Type="Int32" Name="ResolutionSLA" Nullable="true" />
+          <Property Type="String" Name="Comments" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <EntityType Name="Metal">
+          <Key>
+            <PropertyRef Name="Metal1" />
+          </Key>
+          <Property Name="Metal1" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="linecolor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="feed">
+          <Key>
+            <PropertyRef Name="FeedID" />
+          </Key>
+          <Property Name="FeedID" Type="Int32" Nullable="false" />
+          <Property Name="ParentIncident" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IncidentPriority" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IncServiceOffering" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IncAssignmentGroup" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IncOwnershipGroup" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Opened" Type="DateTime" Precision="0" />
+          <Property Name="State" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ResponseSLAText" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ResponseActual" Type="Int32" />
+          <Property Name="ResponseSLA" Type="Int32" />
+          <Property Name="ResponseTarget" Type="Int32" />
+          <Property Name="ResolutionActual" Type="Int32" />
+          <Property Name="ResolutionSLA" Type="Int32" />
+          <Property Name="ResolutionTarget" Type="Int32" />
+          <Property Name="TimeRemaining" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PotentialBreach" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ITaskNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Tower" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TowerA1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ShortDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AssignedTo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Metal" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DaysOpen" Type="Int32" />
+          <Property Name="Aging" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Comments" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Tier" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Priority">
+          <Key>
+            <PropertyRef Name="PriorityId" />
+          </Key>
+          <Property Name="PriorityId" Type="Int32" Nullable="false" />
+          <Property Name="Priority1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="SummaryPeriod">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Year" Type="Int32" />
+          <Property Name="MM" Type="Int32" />
+          <Property Name="Mon" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Week" Type="Int32" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CSLTowerLevelDetailsforMonth">
+          <Key>
+            <PropertyRef Name="Category" />
+          </Key>
+          <Property Name="Category" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Target" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CoreSystem" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CorporateSystems" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerInteraction" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="InformationManagement" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ThirdPartyIntegration" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <ComplexType Name="sp_GetChartSummaryData_Result">
+          <Property Type="String" Name="Data" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_GetChartFeedSummaryData_Result">
+          <Property Type="String" Name="Data" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="Incident_summary">
+          <Key>
+            <PropertyRef Name="Tower" />
+          </Key>
+          <Property Name="Tower" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TotalIncidents" Type="Int32" />
+          <Property Name="TotalResolvedandpercenttoTotal" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TotalResolutionSLA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AgingDays3" Type="Int32" />
+          <Property Name="AgingDaysgreaterthan3" Type="Int32" />
+          <Property Name="AgingDaysgreaterthan7" Type="Int32" />
+          <Property Name="AgingDaysgreaterthan10" Type="Int32" />
+          <Property Name="AgingTotal" Type="Int32" />
+          <Property Name="TotalMarInflow" Type="Int32" />
+        </EntityType>
+        <EntityType Name="UnResolvedIncident">
+          <Key>
+            <PropertyRef Name="Tower" />
+          </Key>
+          <Property Name="Tower" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PendingChange" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PendingUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PendingValidation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PendingVendor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WorkInProgress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="GrandTotal" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="KeyPerformanceIndicator">
+          <Key>
+            <PropertyRef Name="Service" />
+          </Key>
+          <Property Name="Service" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="KPIMeasurement" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Jan" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Feb" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Mar" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tblProblemSummary">
+          <Key>
+            <PropertyRef Name="Summary" />
+          </Key>
+          <Property Name="Summary" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Nov2015" Type="Int32" />
+          <Property Name="Dec2015" Type="Int32" />
+          <Property Name="Jan2016" Type="Int32" />
+          <Property Name="Feb2016" Type="Int32" />
+          <Property Name="Mar2016" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tblWeeklyProblemmanagement">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Problem" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="OpenedOn" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Tower" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="StatusandETA" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tblActionItem">
+          <Key>
+            <PropertyRef Name="Sno" />
+          </Key>
+          <Property Name="Sno" Type="Int32" Nullable="false" />
+          <Property Name="Action_Item" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Owner" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ETA" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="IncidentFeedSummary">
+          <Key>
+            <PropertyRef Name="Tower" />
+          </Key>
+          <Property Name="Tower" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Inflow" Type="Int32" />
+          <Property Name="Resolved" Type="Int32" />
+          <Property Name="ResolutionSLA" Type="Int32" />
+          <Property Name="ResponseSLA" Type="Int32" />
+          <Property Name="Backlog" Type="Int32" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="MM" Type="Int32" />
+          <Property Name="Breached" Type="Int32" />
+          <Property Name="WIP" Type="Int32" />
+          <Property Name="IncidentPriority" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Metal" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Tier" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="AsOfMonth" Type="Int32" />
+          <Property Name="AsOfYear" Type="Int32" />
+        </EntityType>
+        <ComplexType Name="GETIncidentsBySplConditions_Result">
+          <Property Type="Int32" Name="FeedID" Nullable="false" />
+          <Property Type="String" Name="ParentIncident" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="IncidentPriority" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="IncServiceOffering" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="IncAssignmentGroup" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="IncOwnershipGroup" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="Opened" Nullable="true" Precision="16" />
+          <Property Type="String" Name="State" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ResponseSLAText" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="ResponseSLA" Nullable="true" />
+          <Property Type="Int32" Name="ResolutionActual" Nullable="true" />
+          <Property Type="Int32" Name="ResolutionSLA" Nullable="true" />
+          <Property Type="Int32" Name="ResolutionTarget" Nullable="true" />
+          <Property Type="String" Name="TimeRemaining" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="PotentialBreach" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="ITaskNumber" Nullable="true" />
+          <Property Type="String" Name="Tower" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="TowerA1" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ShortDescription" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="AssignedTo" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Metal" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="DaysOpen" Nullable="true" />
+          <Property Type="String" Name="Aging" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Comments" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Tier" Nullable="true" MaxLength="10" />
+        </ComplexType>
+        <EntityType Name="Tower2">
+          <Key>
+            <PropertyRef Name="tower_alias" />
+          </Key>
+          <Property Name="Tower" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="linecolor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="tower_alias" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="CSLInference">
+          <Key>
+            <PropertyRef Name="CommentID" />
+          </Key>
+          <Property Name="Category" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Comments" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="EnteredOn" Type="DateTime" Precision="3" />
+          <Property Name="EnteredBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Approved" Type="Boolean" />
+          <Property Name="ApprovedOn" Type="DateTime" Precision="3" />
+          <Property Name="ApprovedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="CommentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="CSL_table">
+          <Key>
+            <PropertyRef Name="Tower" />
+            <PropertyRef Name="Category" />
+          </Key>
+          <Property Name="Tower" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AsOfYear" Type="Int32" />
+          <Property Name="AsOfMonth" Type="Int32" />
+          <Property Name="Category" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Value" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="Metal" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="CSLField">
+          <Key>
+            <PropertyRef Name="Category" />
+          </Key>
+          <Property Name="Category" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Target" Type="Decimal" Precision="5" Scale="2" />
+        </EntityType>
+        <EntityType Name="App_Availability">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceOffering" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Average" Type="Double" />
+          <Property Name="Metal" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Tower" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AsOfMonth" Type="Int32" />
+          <Property Name="AsOfYear" Type="Int32" />
+        </EntityType>
+        <EntityType Name="RCA">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Number" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="RCA_State" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="RCA_Priority" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ParentIncident" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ParentIncident_State" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ProblemTicket" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="RCA_Status" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ProblemTicketOpenDate" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SLABreach" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Parent_IncidentPriority" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AssignmentGroup" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AssignedTo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ShortDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Closed" Type="DateTime" Precision="0" />
+          <Property Name="ServiceOffering" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Opened" Type="DateTime" Precision="0" />
+          <Property Name="Openedby" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Metal" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="tower" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="AsOfMonth" Type="Int32" />
+          <Property Name="AsOfYear" Type="Int32" />
+          <Property Name="SLAMet" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Synthetic_Trans">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Transactions" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TargetInSecs" Type="Double" />
+          <Property Name="ActualInSecs" Type="Double" />
+          <Property Name="SyntheticTrans_Met" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AsOfMonth" Type="Int32" />
+          <Property Name="AsOfYear" Type="Int32" />
+          <Property Name="tower" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Feed_Snapshot">
+          <Key>
+            <PropertyRef Name="FeedID" />
+          </Key>
+          <Property Name="FeedID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentIncident" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IncidentPriority" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IncServiceOffering" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IncAssignmentGroup" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IncOwnershipGroup" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Opened" Type="DateTime" Precision="3" />
+          <Property Name="State" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ResponseSLAText" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ResponseActual" Type="Int32" />
+          <Property Name="ResponseSLA" Type="Int32" />
+          <Property Name="ResponseTarget" Type="Int32" />
+          <Property Name="ResolutionActual" Type="Int32" />
+          <Property Name="ResolutionSLA" Type="Int32" />
+          <Property Name="ResolutionTarget" Type="Int32" />
+          <Property Name="TimeRemaining" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PotentialBreach" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ITaskNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Tower" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TowerA1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ShortDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AssignedTo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Metal" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DaysOpen" Type="Int32" />
+          <Property Name="Aging" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Comments" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Tier" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="AsOfMonth" Type="Int32" />
+          <Property Name="AsOfYear" Type="Int32" />
+        </EntityType>
+        <ComplexType Name="Sp_GetChrtsDataTest_Result">
+          <Property Type="Int32" Name="AsOfYear" Nullable="true" />
+          <Property Type="Int32" Name="AsOfMonth" Nullable="true" />
+          <Property Type="String" Name="Tower" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="Inflow" Nullable="true" />
+          <Property Type="Int32" Name="Resolved" Nullable="true" />
+          <Property Type="Int32" Name="ResolutionSLA" Nullable="true" />
+          <Property Type="Int32" Name="ResponseSLA" Nullable="true" />
+          <Property Type="Int32" Name="Backlog" Nullable="true" />
+          <Property Type="Int32" Name="Breached" Nullable="true" />
+          <Property Type="Int32" Name="WIP" Nullable="true" />
+          <Property Type="String" Name="IncidentPriority" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="Metal" Nullable="true" MaxLength="15" />
+        </ComplexType>
+        <EntityType Name="Onboarding">
+          <Key>
+            <PropertyRef Name="ResourceId" />
+          </Key>
+          <Property Name="ResourceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LanId" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ResourceLocationType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CurrentEmployee" Type="Boolean" />
+          <Property Name="OnboardingDate" Type="DateTime" Precision="3" />
+          <Property Name="Comments" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="OffboardingDate" Type="DateTime" Precision="3" />
+          <Property Name="Tower" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="UserTower">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Tower" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TowerValue" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DashboardDBModelStoreContainer" CdmEntityContainer="DashboardDBEntities">
+          <EntitySetMapping Name="CSL_Summary">
+            <EntityTypeMapping TypeName="DashboardDBModel.CSL_Summary">
+              <MappingFragment StoreEntitySet="CSL_Summary">
+                <ScalarProperty Name="Mar" ColumnName="Mar" />
+                <ScalarProperty Name="Feb" ColumnName="Feb" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Target" ColumnName="Target" />
+                <ScalarProperty Name="Jan" ColumnName="Jan" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CriticalServicelevelMatrices">
+            <EntityTypeMapping TypeName="DashboardDBModel.CriticalServicelevelMatrix">
+              <MappingFragment StoreEntitySet="CriticalServicelevelMatrix">
+                <ScalarProperty Name="Metal" ColumnName="Metal" />
+                <ScalarProperty Name="TotalInflow" ColumnName="TotalInflow" />
+                <ScalarProperty Name="TotalResolved" ColumnName="TotalResolved" />
+                <ScalarProperty Name="MarchResponse" ColumnName="MarchResponse" />
+                <ScalarProperty Name="Resolution" ColumnName="Resolution" />
+                <ScalarProperty Name="ApplicationAvailability" ColumnName="ApplicationAvailability" />
+                <ScalarProperty Name="Batcheffectiveness" ColumnName="Batcheffectiveness" />
+                <ScalarProperty Name="SyntheticTransactionResponseTime" ColumnName="SyntheticTransactionResponseTime" />
+                <ScalarProperty Name="SHI" ColumnName="SHI" />
+                <ScalarProperty Name="RCA" ColumnName="RCA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetFilterConditions" FunctionName="DashboardDBModel.Store.sp_GetFilterConditions">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DashboardDBModel.sp_GetFilterConditions_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetIncidentsList" FunctionName="DashboardDBModel.Store.GetIncidentsList" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DashboardDBModel.GetIncidentsList_Result">
+                <ScalarProperty Name="FeedID" ColumnName="FeedID" />
+                <ScalarProperty Name="ParentIncident" ColumnName="ParentIncident" />
+                <ScalarProperty Name="IncidentPriority" ColumnName="IncidentPriority" />
+                <ScalarProperty Name="IncServiceOffering" ColumnName="IncServiceOffering" />
+                <ScalarProperty Name="IncAssignmentGroup" ColumnName="IncAssignmentGroup" />
+                <ScalarProperty Name="Opened" ColumnName="Opened" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="ResponseSLA" ColumnName="ResponseSLA" />
+                <ScalarProperty Name="ResolutionSLA" ColumnName="ResolutionSLA" />
+                <ScalarProperty Name="TimeRemaining" ColumnName="TimeRemaining" />
+                <ScalarProperty Name="Tower" ColumnName="Tower" />
+                <ScalarProperty Name="AssignedTo" ColumnName="AssignedTo" />
+                <ScalarProperty Name="Metal" ColumnName="Metal" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetIncidentListByCondn" FunctionName="DashboardDBModel.Store.GetIncidentListByCondn">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="DashboardDBModel.GetIncidentListByCondn_Result1">
+                <ScalarProperty Name="FeedID" ColumnName="FeedID" />
+                <ScalarProperty Name="ParentIncident" ColumnName="ParentIncident" />
+                <ScalarProperty Name="IncidentPriority" ColumnName="IncidentPriority" />
+                <ScalarProperty Name="IncServiceOffering" ColumnName="IncServiceOffering" />
+                <ScalarProperty Name="IncAssignmentGroup" ColumnName="IncAssignmentGroup" />
+                <ScalarProperty Name="Opened" ColumnName="Opened" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="ResponseSLA" ColumnName="ResponseSLA" />
+                <ScalarProperty Name="ResolutionSLA" ColumnName="ResolutionSLA" />
+                <ScalarProperty Name="TimeRemaining" ColumnName="TimeRemaining" />
+                <ScalarProperty Name="Tower" ColumnName="Tower" />
+                <ScalarProperty Name="AssignedTo" ColumnName="AssignedTo" />
+                <ScalarProperty Name="Metal" ColumnName="Metal" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetIncidentListByWhereCondn" FunctionName="DashboardDBModel.Store.GetIncidentListByWhereCondn">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DashboardDBModel.GetIncidentListByWhereCondn_Result">
+                <ScalarProperty Name="FeedID" ColumnName="FeedID" />
+                <ScalarProperty Name="ParentIncident" ColumnName="ParentIncident" />
+                <ScalarProperty Name="IncidentPriority" ColumnName="IncidentPriority" />
+                <ScalarProperty Name="IncServiceOffering" ColumnName="IncServiceOffering" />
+                <ScalarProperty Name="IncAssignmentGroup" ColumnName="IncAssignmentGroup" />
+                <ScalarProperty Name="Opened" ColumnName="Opened" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="ResponseSLA" ColumnName="ResponseSLA" />
+                <ScalarProperty Name="ResolutionSLA" ColumnName="ResolutionSLA" />
+                <ScalarProperty Name="TimeRemaining" ColumnName="TimeRemaining" />
+                <ScalarProperty Name="Tower" ColumnName="Tower" />
+                <ScalarProperty Name="AssignedTo" ColumnName="AssignedTo" />
+                <ScalarProperty Name="Metal" ColumnName="Metal" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetTasksList" FunctionName="DashboardDBModel.Store.GetTasksList">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="DashboardDBModel.GetTasksList_Result1">
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+                <ScalarProperty Name="serviceOffering" ColumnName="serviceOffering" />
+                <ScalarProperty Name="AssignedTo" ColumnName="AssignedTo" />
+                <ScalarProperty Name="ItState" ColumnName="ItState" />
+                <ScalarProperty Name="Metal" ColumnName="Metal" />
+                <ScalarProperty Name="ResponseSLA" ColumnName="ResponseSLA" />
+                <ScalarProperty Name="ResolutionSLA" ColumnName="ResolutionSLA" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UpdateIncident" FunctionName="DashboardDBModel.Store.UpdateIncident" />
+          <EntitySetMapping Name="Metals">
+            <EntityTypeMapping TypeName="DashboardDBModel.Metal">
+              <MappingFragment StoreEntitySet="Metal">
+                <ScalarProperty Name="linecolor" ColumnName="linecolor" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Metal1" ColumnName="Metal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="feeds">
+            <EntityTypeMapping TypeName="DashboardDBModel.feed">
+              <MappingFragment StoreEntitySet="feed">
+                <ScalarProperty Name="Tier" ColumnName="Tier" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Aging" ColumnName="Aging" />
+                <ScalarProperty Name="DaysOpen" ColumnName="DaysOpen" />
+                <ScalarProperty Name="Metal" ColumnName="Metal" />
+                <ScalarProperty Name="AssignedTo" ColumnName="AssignedTo" />
+                <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
+                <ScalarProperty Name="TowerA1" ColumnName="TowerA1" />
+                <ScalarProperty Name="Tower" ColumnName="Tower" />
+                <ScalarProperty Name="ITaskNumber" ColumnName="ITaskNumber" />
+                <ScalarProperty Name="PotentialBreach" ColumnName="PotentialBreach" />
+                <ScalarProperty Name="TimeRemaining" ColumnName="TimeRemaining" />
+                <ScalarProperty Name="ResolutionTarget" ColumnName="ResolutionTarget" />
+                <ScalarProperty Name="ResolutionSLA" ColumnName="ResolutionSLA" />
+                <ScalarProperty Name="ResolutionActual" ColumnName="ResolutionActual" />
+                <ScalarProperty Name="ResponseTarget" ColumnName="ResponseTarget" />
+                <ScalarProperty Name="ResponseSLA" ColumnName="ResponseSLA" />
+                <ScalarProperty Name="ResponseActual" ColumnName="ResponseActual" />
+                <ScalarProperty Name="ResponseSLAText" ColumnName="ResponseSLAText" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Opened" ColumnName="Opened" />
+                <ScalarProperty Name="IncOwnershipGroup" ColumnName="IncOwnershipGroup" />
+                <ScalarProperty Name="IncAssignmentGroup" ColumnName="IncAssignmentGroup" />
+                <ScalarProperty Name="IncServiceOffering" ColumnName="IncServiceOffering" />
+                <ScalarProperty Name="IncidentPriority" ColumnName="IncidentPriority" />
+                <ScalarProperty Name="ParentIncident" ColumnName="ParentIncident" />
+                <ScalarProperty Name="FeedID" ColumnName="FeedID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Priorities">
+            <EntityTypeMapping TypeName="DashboardDBModel.Priority">
+              <MappingFragment StoreEntitySet="Priorities">
+                <ScalarProperty Name="Priority1" ColumnName="Priority" />
+                <ScalarProperty Name="PriorityId" ColumnName="PriorityId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SummaryPeriods">
+            <EntityTypeMapping TypeName="DashboardDBModel.SummaryPeriod">
+              <MappingFragment StoreEntitySet="SummaryPeriod">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Week" ColumnName="Week" />
+                <ScalarProperty Name="Mon" ColumnName="Mon" />
+                <ScalarProperty Name="MM" ColumnName="MM" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CSLTowerLevelDetailsforMonths">
+            <EntityTypeMapping TypeName="DashboardDBModel.CSLTowerLevelDetailsforMonth">
+              <MappingFragment StoreEntitySet="CSLTowerLevelDetailsforMonth">
+                <ScalarProperty Name="ThirdPartyIntegration" ColumnName="ThirdPartyIntegration" />
+                <ScalarProperty Name="InformationManagement" ColumnName="InformationManagement" />
+                <ScalarProperty Name="CustomerInteraction" ColumnName="CustomerInteraction" />
+                <ScalarProperty Name="CorporateSystems" ColumnName="CorporateSystems" />
+                <ScalarProperty Name="CoreSystem" ColumnName="CoreSystem" />
+                <ScalarProperty Name="Target" ColumnName="Target" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetChartSummaryData" FunctionName="DashboardDBModel.Store.sp_GetChartSummaryData" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DashboardDBModel.sp_GetChartSummaryData_Result">
+                <ScalarProperty Name="Data" ColumnName="Data" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetChartFeedSummaryData" FunctionName="DashboardDBModel.Store.sp_GetChartFeedSummaryData" >
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Incident_summary">
+            <EntityTypeMapping TypeName="DashboardDBModel.Incident_summary">
+              <MappingFragment StoreEntitySet="Incident_summary">
+                <ScalarProperty Name="TotalMarInflow" ColumnName="TotalMarInflow" />
+                <ScalarProperty Name="AgingTotal" ColumnName="AgingTotal" />
+                <ScalarProperty Name="AgingDaysgreaterthan10" ColumnName="AgingDaysgreaterthan10" />
+                <ScalarProperty Name="AgingDaysgreaterthan7" ColumnName="AgingDaysgreaterthan7" />
+                <ScalarProperty Name="AgingDaysgreaterthan3" ColumnName="AgingDaysgreaterthan3" />
+                <ScalarProperty Name="AgingDays3" ColumnName="AgingDays3" />
+                <ScalarProperty Name="TotalResolutionSLA" ColumnName="TotalResolutionSLA" />
+                <ScalarProperty Name="TotalResolvedandpercenttoTotal" ColumnName="TotalResolvedandpercenttoTotal" />
+                <ScalarProperty Name="TotalIncidents" ColumnName="TotalIncidents" />
+                <ScalarProperty Name="Tower" ColumnName="Tower" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UnResolvedIncidents">
+            <EntityTypeMapping TypeName="DashboardDBModel.UnResolvedIncident">
+              <MappingFragment StoreEntitySet="UnResolvedIncidents">
+                <ScalarProperty Name="GrandTotal" ColumnName="GrandTotal" />
+                <ScalarProperty Name="WorkInProgress" ColumnName="WorkInProgress" />
+                <ScalarProperty Name="PendingVendor" ColumnName="PendingVendor" />
+                <ScalarProperty Name="PendingValidation" ColumnName="PendingValidation" />
+                <ScalarProperty Name="PendingUser" ColumnName="PendingUser" />
+                <ScalarProperty Name="PendingChange" ColumnName="PendingChange" />
+                <ScalarProperty Name="Tower" ColumnName="Tower" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KeyPerformanceIndicators">
+            <EntityTypeMapping TypeName="DashboardDBModel.KeyPerformanceIndicator">
+              <MappingFragment StoreEntitySet="KeyPerformanceIndicator">
+                <ScalarProperty Name="Mar" ColumnName="Mar" />
+                <ScalarProperty Name="Feb" ColumnName="Feb" />
+                <ScalarProperty Name="Jan" ColumnName="Jan" />
+                <ScalarProperty Name="KPIMeasurement" ColumnName="KPIMeasurement" />
+                <ScalarProperty Name="Service" ColumnName="Service" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblProblemSummaries">
+            <EntityTypeMapping TypeName="DashboardDBModel.tblProblemSummary">
+              <MappingFragment StoreEntitySet="tblProblemSummary">
+                <ScalarProperty Name="Mar2016" ColumnName="Mar2016" />
+                <ScalarProperty Name="Feb2016" ColumnName="Feb2016" />
+                <ScalarProperty Name="Jan2016" ColumnName="Jan2016" />
+                <ScalarProperty Name="Dec2015" ColumnName="Dec2015" />
+                <ScalarProperty Name="Nov2015" ColumnName="Nov2015" />
+                <ScalarProperty Name="Summary" ColumnName="Summary" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblWeeklyProblemmanagements">
+            <EntityTypeMapping TypeName="DashboardDBModel.tblWeeklyProblemmanagement">
+              <MappingFragment StoreEntitySet="tblWeeklyProblemmanagement">
+                <ScalarProperty Name="StatusandETA" ColumnName="StatusandETA" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Tower" ColumnName="Tower" />
+                <ScalarProperty Name="OpenedOn" ColumnName="OpenedOn" />
+                <ScalarProperty Name="Problem" ColumnName="Problem" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblActionItems">
+            <EntityTypeMapping TypeName="DashboardDBModel.tblActionItem">
+              <MappingFragment StoreEntitySet="tblActionItems">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ETA" ColumnName="ETA" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="Action_Item" ColumnName="Action Item" />
+                <ScalarProperty Name="Sno" ColumnName="Sno" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="UpdateTask" FunctionName="DashboardDBModel.Store.UpdateTask" />
+          <EntitySetMapping Name="IncidentFeedSummaries">
+            <EntityTypeMapping TypeName="DashboardDBModel.IncidentFeedSummary">
+              <MappingFragment StoreEntitySet="IncidentFeedSummary">
+                <ScalarProperty Name="AsOfYear" ColumnName="AsOfYear" />
+                <ScalarProperty Name="AsOfMonth" ColumnName="AsOfMonth" />
+                <ScalarProperty Name="Tier" ColumnName="Tier" />
+                <ScalarProperty Name="Metal" ColumnName="Metal" />
+                <ScalarProperty Name="IncidentPriority" ColumnName="IncidentPriority" />
+                <ScalarProperty Name="WIP" ColumnName="WIP" />
+                <ScalarProperty Name="Breached" ColumnName="Breached" />
+                <ScalarProperty Name="MM" ColumnName="MM" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Backlog" ColumnName="Backlog" />
+                <ScalarProperty Name="ResponseSLA" ColumnName="ResponseSLA" />
+                <ScalarProperty Name="ResolutionSLA" ColumnName="ResolutionSLA" />
+                <ScalarProperty Name="Resolved" ColumnName="Resolved" />
+                <ScalarProperty Name="Inflow" ColumnName="Inflow" />
+                <ScalarProperty Name="Tower" ColumnName="Tower" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GETIncidentsBySplConditions" FunctionName="DashboardDBModel.Store.GETIncidentsBySplConditions">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DashboardDBModel.GETIncidentsBySplConditions_Result">
+                <ScalarProperty Name="FeedID" ColumnName="FeedID" />
+                <ScalarProperty Name="ParentIncident" ColumnName="ParentIncident" />
+                <ScalarProperty Name="IncidentPriority" ColumnName="IncidentPriority" />
+                <ScalarProperty Name="IncServiceOffering" ColumnName="IncServiceOffering" />
+                <ScalarProperty Name="IncAssignmentGroup" ColumnName="IncAssignmentGroup" />
+                <ScalarProperty Name="IncOwnershipGroup" ColumnName="IncOwnershipGroup" />
+                <ScalarProperty Name="Opened" ColumnName="Opened" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="ResponseSLAText" ColumnName="ResponseSLAText" />
+                <ScalarProperty Name="ResponseSLA" ColumnName="ResponseSLA" />
+                <ScalarProperty Name="ResolutionActual" ColumnName="ResolutionActual" />
+                <ScalarProperty Name="ResolutionSLA" ColumnName="ResolutionSLA" />
+                <ScalarProperty Name="ResolutionTarget" ColumnName="ResolutionTarget" />
+                <ScalarProperty Name="TimeRemaining" ColumnName="TimeRemaining" />
+                <ScalarProperty Name="PotentialBreach" ColumnName="PotentialBreach" />
+                <ScalarProperty Name="ITaskNumber" ColumnName="ITaskNumber" />
+                <ScalarProperty Name="Tower" ColumnName="Tower" />
+                <ScalarProperty Name="TowerA1" ColumnName="TowerA1" />
+                <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
+                <ScalarProperty Name="AssignedTo" ColumnName="AssignedTo" />
+                <ScalarProperty Name="Metal" ColumnName="Metal" />
+                <ScalarProperty Name="DaysOpen" ColumnName="DaysOpen" />
+                <ScalarProperty Name="Aging" ColumnName="Aging" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Tier" ColumnName="Tier" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetAgingData" FunctionName="DashboardDBModel.Store.sp_GetAgingData" />
+          <EntitySetMapping Name="Tower2">
+            <EntityTypeMapping TypeName="DashboardDBModel.Tower2">
+              <MappingFragment StoreEntitySet="Tower2">
+                <ScalarProperty Name="tower_alias" ColumnName="tower_alias" />
+                <ScalarProperty Name="linecolor" ColumnName="linecolor" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Tower" ColumnName="Tower" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetBacklogData" FunctionName="DashboardDBModel.Store.sp_GetBacklogData" />
+          <EntitySetMapping Name="CSLInferences">
+            <EntityTypeMapping TypeName="DashboardDBModel.CSLInference">
+              <MappingFragment StoreEntitySet="CSLInferences">
+                <ScalarProperty Name="CommentID" ColumnName="CommentID" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
+                <ScalarProperty Name="ApprovedOn" ColumnName="ApprovedOn" />
+                <ScalarProperty Name="Approved" ColumnName="Approved" />
+                <ScalarProperty Name="EnteredBy" ColumnName="EnteredBy" />
+                <ScalarProperty Name="EnteredOn" ColumnName="EnteredOn" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CSL_table">
+            <EntityTypeMapping TypeName="DashboardDBModel.CSL_table">
+              <MappingFragment StoreEntitySet="CSL_table">
+                <ScalarProperty Name="Metal" ColumnName="Metal" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="AsOfMonth" ColumnName="AsOfMonth" />
+                <ScalarProperty Name="AsOfYear" ColumnName="AsOfYear" />
+                <ScalarProperty Name="Tower" ColumnName="Tower" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CSLFields">
+            <EntityTypeMapping TypeName="DashboardDBModel.CSLField">
+              <MappingFragment StoreEntitySet="CSLFields">
+                <ScalarProperty Name="Target" ColumnName="Target" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="App_Availability">
+            <EntityTypeMapping TypeName="DashboardDBModel.App_Availability">
+              <MappingFragment StoreEntitySet="App_Availability">
+                <ScalarProperty Name="AsOfYear" ColumnName="AsOfYear" />
+                <ScalarProperty Name="AsOfMonth" ColumnName="AsOfMonth" />
+                <ScalarProperty Name="Tower" ColumnName="Tower" />
+                <ScalarProperty Name="Metal" ColumnName="Metal" />
+                <ScalarProperty Name="Average" ColumnName="Average" />
+                <ScalarProperty Name="ServiceOffering" ColumnName="ServiceOffering" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RCAs">
+            <EntityTypeMapping TypeName="DashboardDBModel.RCA">
+              <MappingFragment StoreEntitySet="RCA">
+                <ScalarProperty Name="SLAMet" ColumnName="SLAMet" />
+                <ScalarProperty Name="AsOfYear" ColumnName="AsOfYear" />
+                <ScalarProperty Name="AsOfMonth" ColumnName="AsOfMonth" />
+                <ScalarProperty Name="tower" ColumnName="tower" />
+                <ScalarProperty Name="Metal" ColumnName="Metal" />
+                <ScalarProperty Name="Openedby" ColumnName="Openedby" />
+                <ScalarProperty Name="Opened" ColumnName="Opened" />
+                <ScalarProperty Name="ServiceOffering" ColumnName="ServiceOffering" />
+                <ScalarProperty Name="Closed" ColumnName="Closed" />
+                <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
+                <ScalarProperty Name="AssignedTo" ColumnName="AssignedTo" />
+                <ScalarProperty Name="AssignmentGroup" ColumnName="AssignmentGroup" />
+                <ScalarProperty Name="Parent_IncidentPriority" ColumnName="Parent_IncidentPriority" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="SLABreach" ColumnName="SLABreach" />
+                <ScalarProperty Name="ProblemTicketOpenDate" ColumnName="ProblemTicketOpenDate" />
+                <ScalarProperty Name="RCA_Status" ColumnName="RCA_Status" />
+                <ScalarProperty Name="ProblemTicket" ColumnName="ProblemTicket" />
+                <ScalarProperty Name="ParentIncident_State" ColumnName="ParentIncident_State" />
+                <ScalarProperty Name="ParentIncident" ColumnName="ParentIncident" />
+                <ScalarProperty Name="RCA_Priority" ColumnName="RCA_Priority" />
+                <ScalarProperty Name="RCA_State" ColumnName="RCA_State" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Synthetic_Trans">
+            <EntityTypeMapping TypeName="DashboardDBModel.Synthetic_Trans">
+              <MappingFragment StoreEntitySet="Synthetic_Trans">
+                <ScalarProperty Name="tower" ColumnName="tower" />
+                <ScalarProperty Name="AsOfYear" ColumnName="AsOfYear" />
+                <ScalarProperty Name="AsOfMonth" ColumnName="AsOfMonth" />
+                <ScalarProperty Name="SyntheticTrans_Met" ColumnName="SyntheticTrans_Met" />
+                <ScalarProperty Name="ActualInSecs" ColumnName="ActualInSecs" />
+                <ScalarProperty Name="TargetInSecs" ColumnName="TargetInSecs" />
+                <ScalarProperty Name="Transactions" ColumnName="Transactions" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Feed_Snapshot">
+            <EntityTypeMapping TypeName="DashboardDBModel.Feed_Snapshot">
+              <MappingFragment StoreEntitySet="Feed_Snapshot">
+                <ScalarProperty Name="AsOfYear" ColumnName="AsOfYear" />
+                <ScalarProperty Name="AsOfMonth" ColumnName="AsOfMonth" />
+                <ScalarProperty Name="Tier" ColumnName="Tier" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Aging" ColumnName="Aging" />
+                <ScalarProperty Name="DaysOpen" ColumnName="DaysOpen" />
+                <ScalarProperty Name="Metal" ColumnName="Metal" />
+                <ScalarProperty Name="AssignedTo" ColumnName="AssignedTo" />
+                <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
+                <ScalarProperty Name="TowerA1" ColumnName="TowerA1" />
+                <ScalarProperty Name="Tower" ColumnName="Tower" />
+                <ScalarProperty Name="ITaskNumber" ColumnName="ITaskNumber" />
+                <ScalarProperty Name="PotentialBreach" ColumnName="PotentialBreach" />
+                <ScalarProperty Name="TimeRemaining" ColumnName="TimeRemaining" />
+                <ScalarProperty Name="ResolutionTarget" ColumnName="ResolutionTarget" />
+                <ScalarProperty Name="ResolutionSLA" ColumnName="ResolutionSLA" />
+                <ScalarProperty Name="ResolutionActual" ColumnName="ResolutionActual" />
+                <ScalarProperty Name="ResponseTarget" ColumnName="ResponseTarget" />
+                <ScalarProperty Name="ResponseSLA" ColumnName="ResponseSLA" />
+                <ScalarProperty Name="ResponseActual" ColumnName="ResponseActual" />
+                <ScalarProperty Name="ResponseSLAText" ColumnName="ResponseSLAText" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Opened" ColumnName="Opened" />
+                <ScalarProperty Name="IncOwnershipGroup" ColumnName="IncOwnershipGroup" />
+                <ScalarProperty Name="IncAssignmentGroup" ColumnName="IncAssignmentGroup" />
+                <ScalarProperty Name="IncServiceOffering" ColumnName="IncServiceOffering" />
+                <ScalarProperty Name="IncidentPriority" ColumnName="IncidentPriority" />
+                <ScalarProperty Name="ParentIncident" ColumnName="ParentIncident" />
+                <ScalarProperty Name="FeedID" ColumnName="FeedID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Sp_GetChrtsDataTest" FunctionName="DashboardDBModel.Store.Sp_GetChrtsDataTest">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DashboardDBModel.Sp_GetChrtsDataTest_Result">
+                <ScalarProperty Name="AsOfYear" ColumnName="AsOfYear" />
+                <ScalarProperty Name="AsOfMonth" ColumnName="AsOfMonth" />
+                <ScalarProperty Name="Tower" ColumnName="Tower" />
+                <ScalarProperty Name="Inflow" ColumnName="Inflow" />
+                <ScalarProperty Name="Resolved" ColumnName="Resolved" />
+                <ScalarProperty Name="ResolutionSLA" ColumnName="ResolutionSLA" />
+                <ScalarProperty Name="ResponseSLA" ColumnName="ResponseSLA" />
+                <ScalarProperty Name="Backlog" ColumnName="Backlog" />
+                <ScalarProperty Name="Breached" ColumnName="Breached" />
+                <ScalarProperty Name="WIP" ColumnName="WIP" />
+                <ScalarProperty Name="IncidentPriority" ColumnName="IncidentPriority" />
+                <ScalarProperty Name="Metal" ColumnName="Metal" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Onboardings">
+            <EntityTypeMapping TypeName="DashboardDBModel.Onboarding">
+              <MappingFragment StoreEntitySet="Onboarding">
+                <ScalarProperty Name="Tower" ColumnName="Tower" />
+                <ScalarProperty Name="OffboardingDate" ColumnName="OffboardingDate" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="OnboardingDate" ColumnName="OnboardingDate" />
+                <ScalarProperty Name="CurrentEmployee" ColumnName="CurrentEmployee" />
+                <ScalarProperty Name="ResourceLocationType" ColumnName="ResourceLocationType" />
+                <ScalarProperty Name="LanId" ColumnName="LanId" />
+                <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+                <ScalarProperty Name="ResourceId" ColumnName="ResourceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserTowers">
+            <EntityTypeMapping TypeName="DashboardDBModel.UserTower">
+              <MappingFragment StoreEntitySet="UserTower">
+                <ScalarProperty Name="TowerValue" ColumnName="TowerValue" />
+                <ScalarProperty Name="Tower" ColumnName="Tower" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="MapTowerToUser" FunctionName="DashboardDBModel.Store.MapTowerToUser" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

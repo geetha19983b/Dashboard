@@ -698,7 +698,7 @@ warning 6002: The table/view 'OperationDashboardData.dbo.UnResolvedIncidents' do
           </FunctionImport>
           <EntitySet Name="Tower2" EntityType="DashboardDBModel.Tower2" />
           <FunctionImport Name="sp_GetBacklogData" ReturnType="Collection(String)" >
-            <Parameter Name="Tower" Mode="In" Type="String" />
+          <Parameter Name="Tower" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="CSLInferences" EntityType="DashboardDBModel.CSLInference" />
           <EntitySet Name="CSL_table" EntityType="DashboardDBModel.CSL_table" />

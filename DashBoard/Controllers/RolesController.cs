@@ -201,36 +201,39 @@ namespace DashBoard.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult MapTowersToUsers(string UserName, string RoleName, List<string> Towers)
+        public ActionResult MapTowersToUsers(string UserName, List<string> Towers)
         {
-            var account = new AccountController();
-            ApplicationUser user;
 
-            if (string.IsNullOrEmpty(UserName) || string.IsNullOrEmpty(RoleName))
+
+
+            if (string.IsNullOrEmpty(UserName))
             {
-                TempData["msg"] = "<script>alert('Enter User and Role Name !');</script>";
+                TempData["msg"] = "<script>alert('Select User Name !');</script>";
+
             }
             else
             {
 
-                user = context.Users.Where(u => u.UserName.Equals(UserName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
-                if (!(string.IsNullOrEmpty(RoleName)))
+
+                //map checked towers to user tower mapping                
+
+                foreach (string tower in Towers)
                 {
-                    account.UserManager.AddToRole(user.Id, RoleName);
-
-                    foreach (string tower in Towers)
-                    {
-                        dashDB.MapTowerToUser(UserName, tower);
-                    }
-
-                    //ViewBag.ResultMessage = "Role created successfully !";
-
-                    TempData["msg"] = "<script>alert('User mapped to the chosen role !');</script>";
+                    dashDB.MapTowerToUser(UserName, tower);
                 }
-                else
-                {
-                    TempData["msg"] = "<script>alert('Kindly chose the role to map !');</script>";
-                }
+
+                //remove unchecked towers from the user tower mapping
+                var twrstodel = (from twrsrow in dashDB.UserTowers
+                                 where twrsrow.Username == UserName
+                                 && Towers.Any(t => twrsrow.Tower.Contains(t)) == false
+                                 select twrsrow);
+
+                dashDB.UserTowers.RemoveRange(twrstodel);
+                dashDB.SaveChanges();
+
+                TempData["msg"] = "<script>alert('User mapped to the chosen Towers !');</script>";
+
+
             }
             var userlist = context.Users.OrderBy(u => u.UserName).ToList().Select(uu => new SelectListItem { Value = uu.UserName.ToString(), Text = uu.UserName }).ToList();
             ViewBag.Users = userlist;
@@ -241,6 +244,16 @@ namespace DashBoard.Controllers
 
             return View("ManageUserRoles");
         }
+        public JsonResult GetTowersForUser(string userName)
+        {
+
+
+            var twrlistfruser = dashDB.UserTowers.Where(x => x.Username == userName).Select(x => x.Tower).ToList();
+
+            return Json(twrlistfruser, JsonRequestBehavior.AllowGet);
+
+        }
+
 
     }
 }

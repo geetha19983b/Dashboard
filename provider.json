@@ -1,0 +1,68 @@
+{
+	"ExtractType": [{
+			"Name": "Provider",
+			"States": [{
+					"name": "IL",
+
+					"Details": [{
+							"name": "IL Ex 1",
+							"Schedule": "Daily"
+
+						},
+						{
+							"name": "IL Ex 2",
+							"Schedule": "Daily"
+						}
+					]
+				},
+				{
+					"name": "CA",
+
+					"Details": [{
+							"name": "CA Ex 1",
+							"Schedule": "Daily"
+
+						},
+						{
+							"name": "CA Ex 2",
+							"Schedule": "Monthly"
+						}
+					]
+				}
+			]
+		},
+		{
+			"Name": "Claim",
+			"States": [{
+					"name": "NY",
+
+					"Details": [{
+							"name": "NY Ex 1",
+							"Schedule": "Daily"
+
+						},
+						{
+							"name": "NY Ex 2",
+							"Schedule": "Daily"
+						}
+					]
+				},
+				{
+					"name": "PR",
+
+					"Details": [{
+							"name": "PR Ex 1",
+							"Schedule": "Daily"
+
+						},
+						{
+							"name": "PR Ex 2",
+							"Schedule": "Monthly"
+						}
+					]
+				}
+			]
+		}
+	]
+
+}

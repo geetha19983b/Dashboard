@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html ng-app="app">
+
+<head>
+  <script data-require="angular.js@1.2.25" data-semver="1.2.25" src="https://code.angularjs.org/1.2.25/angular.js"></script>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js"></script>
+</head>
+
+<body ng-controller="CompaniesController">
+  <h1>Companies List!</h1>
+  <ul>
+    <li ng-repeat="company in companies">{{company}}</li>
+  </ul>
+  <hr>
+  <h1>Technologies List!!</h1>
+  <ul>
+    <li ng-repeat="tech in technologies">{{tech}}</li>
+  </ul>
+  {{extracts}}
+  
+    <ul ng-repeat="ext in extracts">
+	<ul ng-repeat="eachext in ext">{{eachext.Name}}
+	<ul ng-repeat="eachstate in eachext.States">{{eachstate.name}}
+	<ul ng-repeat="eachstatedetail in eachstate.Details">{{eachstatedetail.name}}
+	{{eachstatedetail.Schedule}}
+	</ul>
+	</ul>
+	</ul>
+	</ul>
+ 
+</body>
+
+</html>

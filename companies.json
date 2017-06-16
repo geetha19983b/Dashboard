@@ -1,0 +1,29 @@
+[
+  {
+    "title": "EPAM",
+    "technologies": [
+        "PHP",
+        ".net",
+        "Java",
+        "Mobile",
+        "Objective-C",
+        "Python",
+        "Ruby"
+    ],
+    "location": "Belarus",
+    "city": "Minsk" 
+  },
+  {
+    "title": "Parallels",
+    "technologies": [
+        "PHP",
+        "Java",
+        "C++",
+        "iOS Development",
+        "C#",
+        "Ember.js"
+    ],
+    "location": "Russia",
+    "city": "Moscow" 
+  }
+]
